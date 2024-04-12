@@ -1,5 +1,6 @@
 const express = require("express");
 const prisma = require("../prismaClient");
+const { faker } = require("@faker-js/faker");
 
 const router = express.Router();
 
@@ -30,31 +31,42 @@ router.post("/login", async (req, res) => {
       // Create a new user with predefined data
       user = await prisma.user.create({
         data: {
-          firstName: "John",
-          lastName: "Doe",
+          firstName: faker.person.firstName(),
+          lastName: faker.person.lastName(),
           phoneNumber: phoneNumber,
           relusertenant: {
-            create: {
+            create: Array.from({ length: 3 }, () => ({
               tenant: {
                 create: {
-                  description: "Test Tenant",
-                  imageUrl: "https://example.com/tenant-image.jpg",
+                  description: faker.lorem.words(),
+                  imageUrl: faker.image.imageUrl(),
                   vouchers: {
-                    create: {
-                      description: "Test Voucher",
-                      name: "Voucher Name",
-                      imageUrl: "https://example.com/voucher-image.jpg",
+                    createMany: {
+                      data: Array.from({ length: 3 }, () => ({
+                        description: faker.lorem.words(),
+                        name: faker.commerce.productName(),
+                        imageUrl: faker.image.imageUrl(),
+                      })),
                     },
                   },
                   coupons: {
-                    create: {
-                      description: "Test Coupon",
-                      name: "Coupon Name",
-                      imageUrl: "https://example.com/coupon-image.jpg",
+                    createMany: {
+                      data: Array.from({ length: 3 }, () => ({
+                        description: faker.lorem.words(),
+                        name: faker.commerce.productName(),
+                        imageUrl: faker.image.imageUrl(),
+                      })),
                     },
                   },
                 },
               },
+            })),
+          },
+        },
+        include: {
+          relusertenant: {
+            include: {
+              tenant: true,
             },
           },
         },

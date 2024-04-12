@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const VerifyScreen = () => {
   const router = useRouter();
@@ -16,8 +17,6 @@ const VerifyScreen = () => {
       });
 
       if (verifiedCode) {
-        // await setActive({ session: verifiedCode.createdSessionId });
-
         const response = await axios.post(
           "http://192.168.100.168:3000/api/auth/login",
           {
@@ -27,7 +26,9 @@ const VerifyScreen = () => {
 
         // Handle response
         if (response.status === 200) {
+          await setActive({ session: verifiedCode.createdSessionId });
           const userId = response.data.user.id;
+          await AsyncStorage.setItem('userId', userId.toString());
           router.push(`/tenants/${userId}`);
         }
 

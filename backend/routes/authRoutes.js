@@ -1,41 +1,67 @@
-// authRoutes.js
-
 const express = require("express");
 const prisma = require("../prismaClient");
-const { faker } = require("@faker-js/faker");
 
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
   const { phoneNumber } = req.body;
 
-  console.log(phoneNumber);
-
   try {
     // Check if user exists
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         phoneNumber,
+      },
+      include: {
+        relusertenant: {
+          include: {
+            tenant: {
+              include: {
+                vouchers: true,
+                coupons: true,
+              },
+            },
+          },
+        },
       },
     });
 
     if (!user) {
-      const firstName = faker.person.firstName();
-      const lastName = faker.person.lastName();
-      // Create a new user with faker firstName and lastName
-      const newUser = await prisma.user.create({
+      // Create a new user with predefined data
+      user = await prisma.user.create({
         data: {
-          firstName,
-          lastName,
-          phoneNumber,
+          firstName: "John",
+          lastName: "Doe",
+          phoneNumber: phoneNumber,
+          relusertenant: {
+            create: {
+              tenant: {
+                create: {
+                  description: "Test Tenant",
+                  imageUrl: "https://example.com/tenant-image.jpg",
+                  vouchers: {
+                    create: {
+                      description: "Test Voucher",
+                      name: "Voucher Name",
+                      imageUrl: "https://example.com/voucher-image.jpg",
+                    },
+                  },
+                  coupons: {
+                    create: {
+                      description: "Test Coupon",
+                      name: "Coupon Name",
+                      imageUrl: "https://example.com/coupon-image.jpg",
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       });
-      return res
-        .status(200)
-        .json({ message: "Login successful", user: newUser });
-    } else {
-      console.log("User already in use");
     }
+
+    console.log(user);
     return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in:", error);

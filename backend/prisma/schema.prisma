@@ -19,4 +19,43 @@ model User {
   phoneNumber String  @unique
   firstName  String?
   lastName  String?
+  relusertenant RelUserTenant[]
+}
+
+
+model Tenant {
+  id           Int            @id @default(autoincrement())
+  description  String
+  imageUrl     String
+  vouchers     Voucher[]
+  coupons      Coupon[]
+  relusertenant RelUserTenant[]
+}
+
+model Coupon {
+  id           Int            @id @default(autoincrement())
+  description  String
+  name         String
+  imageUrl     String
+  tenant       Tenant         @relation(fields: [tenantId], references: [id])
+  tenantId     Int
+}
+
+model Voucher {
+  id           Int            @id @default(autoincrement())
+  description  String
+  name         String
+  imageUrl     String
+  tenant       Tenant         @relation(fields: [tenantId], references: [id])
+  tenantId     Int
+}
+
+model RelUserTenant {
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+  tenant   Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId Int
+
+  @@unique([userId, tenantId])
 }

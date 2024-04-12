@@ -9,6 +9,7 @@ const LoginScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const { signUp } = useSignUp();
 
+
   const sendVerificationCode = async () => {
     try {
       await signUp.create({

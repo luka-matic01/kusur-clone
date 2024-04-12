@@ -2,20 +2,24 @@ import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { Slot, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { CLERK_PUBLISHABLE_KEY } from "@env";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect(async() => {
     if (!isLoaded) return;
 
     const inTabsGroup = segments[0] === "(auth)";
 
+
+
     if (isSignedIn && !inTabsGroup) {
-      router.replace("/");
+      const userId = await AsyncStorage.getItem('userId');
+      console.log(`User id: ${userId}`);
+      // router.replace("/");
     } else if (!isSignedIn) {
       router.replace("/login");
     }

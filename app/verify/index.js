@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const VerifyScreen = () => {
   const router = useRouter();
@@ -28,8 +28,8 @@ const VerifyScreen = () => {
         if (response.status === 200) {
           await setActive({ session: verifiedCode.createdSessionId });
           const userId = response.data.user.id;
-          await AsyncStorage.setItem('userId', userId.toString());
-          router.push(`/tenants/${userId}`);
+          // await AsyncStorage.setItem('userId', userId.toString());
+          // router.push(`/tenants/${userId}`);
         }
 
         // Navigate to the homepage

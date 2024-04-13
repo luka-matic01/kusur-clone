@@ -1,11 +1,27 @@
-import { Text } from 'react-native';
-import {useSession,useAuth} from '@clerk/clerk-expo';
+import React, { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-expo";
+import { Redirect } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Page() {
-    const { signOut} = useAuth();
-    const { isLoaded, isActive  } = useSession();
+const Index = () => {
+  const { signOut } = useAuth();
 
-   
-    // signOut();
-  return <Text>Home page</Text>;
-}
+  // useEffect(() => {
+  //   const clearAsyncStorage = async () => {
+  //     try {
+  //       await AsyncStorage.removeItem("userId");
+  //       // Sign out the user
+  //       await signOut();
+  //     } catch (error) {
+  //       console.error("Error clearing AsyncStorage:", error);
+  //       // Handle error if needed
+  //     }
+  //   };
+
+  //   clearAsyncStorage();
+  // }, []);
+
+  return <Redirect href="/login" />;
+};
+
+export default Index;

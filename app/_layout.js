@@ -1,8 +1,10 @@
+import React, { useEffect } from "react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { Slot, useRouter, useSegments } from "expo-router";
-import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen"; // Fix import here
+import Toast from "react-native-toast-message";
 import { CLERK_PUBLISHABLE_KEY } from "@env";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();
@@ -10,41 +12,52 @@ const InitialLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoaded) return;
+    const fetchData = async () => {
+      if (!isLoaded) return;
 
-    const inTabsGroup = segments[0] === "(auth)";
+      const inTabsGroup = segments[0] === "(auth)";
 
-    if (isSignedIn && !inTabsGroup) {
-      console.log("hi");
-    } else if (!isSignedIn) {
-      router.replace("/login");
-    }
-  }, [isSignedIn]);
+      if (isSignedIn && !inTabsGroup) {
+        try {
+          const userId = await AsyncStorage.getItem("userId");
+          console.log(userId);
+          router.replace(`/tenants/${userId}`);
+        } catch (error) {
+          console.error("Error fetching userId from AsyncStorage:", error);
+          // Handle error if needed
+        }
+      } else if (!isSignedIn) {
+        router.replace("/login");
+      }
+    };
+
+    fetchData();
+
+    // Don't return anything from useEffect
+  }, [isLoaded, isSignedIn]);
 
   return <Slot />;
 };
 
-// const tokenCache = {
-//   async getToken(key) {
-//     try {
-//       return SecureStore.getItemAsync(key);
-//     } catch (err) {
-//       return null;
-//     }
-//   },
-//   async saveToken(key, value) {
-//     try {
-//       return SecureStore.setItemAsync(key, value);
-//     } catch (err) {
-//       return;
-//     }
-//   },
-// };
-
 const RootLayout = () => {
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+    return () => {
+      // Cleanup function if needed
+    };
+  }, []);
+
+  useEffect(() => {
+    async function hideSplashScreen() {
+      await SplashScreen.hideAsync();
+    }
+    hideSplashScreen();
+  }, []);
+
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <InitialLayout />
+      <Toast />
     </ClerkProvider>
   );
 };

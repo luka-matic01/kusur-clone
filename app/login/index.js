@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
   View,
   ImageBackground,
 } from "react-native";
@@ -22,6 +21,7 @@ const LoginScreen = () => {
     <ImageBackground
       source={require("../../assets/app-background.jpg")} // Specify the background image
       style={{ flex: 1, justifyContent: "start", alignItems: "center" }}
+      className="min-h-screen"
     >
       <View className="flex items-center jsutify-center mt-24 mb-12">
         <KusurLogo width={140} height={35} />
@@ -96,7 +96,7 @@ const LoginScreen = () => {
                 <FacebookIcon width={25} height={25} />
               </View>
             </View>
-            <View className="backdrop:order-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
+            <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
               <Text className="text-[16px] font-bold text-white">
                 Login with Facebook
               </Text>

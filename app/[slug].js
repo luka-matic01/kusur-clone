@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Text, ActivityIndicator, View, SafeAreaView, ScrollView } from "react-native";
 import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
-import PlusIcon from "../../assets/tenants/plus-icon.svg";
-import MenuIcon from "../../assets/tenants/menu-icon.svg";
-import QuestionIcon from "../../assets/tenants/question-icon.svg";
-import TenantCard from "../../components/TenantCard";
+import PlusIcon from "../assets/tenants/plus-icon.svg";
+import MenuIcon from "../assets/tenants/menu-icon.svg";
+import QuestionIcon from "../assets/tenants/question-icon.svg";
+import TenantCard from "../components/TenantCard";
 
 const Tenants = () => {
   const { slug } = useLocalSearchParams();

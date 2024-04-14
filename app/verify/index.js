@@ -61,7 +61,7 @@ const VerifyScreen = () => {
           await setActive({ session: verifiedCode.createdSessionId });
           const userId = response.data.user.id;
           await AsyncStorage.setItem("userId", userId.toString());
-          router.push(`/tenants/${userId}`);
+          router.push(`/${userId}`);
         }
       }
     } catch (error) {

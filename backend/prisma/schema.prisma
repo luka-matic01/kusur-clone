@@ -13,41 +13,64 @@ datasource db {
   url      = env("MYSQL_DATABASE_URL")
 }
 
-
 model User {
-  id    Int     @id @default(autoincrement())
-  phoneNumber String  @unique
-  firstName  String?
-  lastName  String?
-  relusertenant RelUserTenant[]
+  id              Int               @id @default(autoincrement())
+  phoneNumber     String            @unique
+  firstName       String?
+  lastName        String?
+  relusertenant   RelUserTenant[]
+  wallet          Wallet?           @relation(fields: [walletId], references: [id])
+  walletId        Int?              @unique
 }
 
+model Wallet {
+  id              Int              @id @default(autoincrement())
+  pointBalance    Int
+  tenants         Tenant[]         @relation("TenantWallet")
+  user            User?             @relation
+}
 
 model Tenant {
-  id           Int            @id @default(autoincrement())
-  description  String
-  imageUrl     String
-  vouchers     Voucher[]
-  coupons      Coupon[]
-  relusertenant RelUserTenant[]
+  id                Int              @id @default(autoincrement())
+  description       String
+  imageUrl          String
+  vouchers          Voucher[]
+  coupons           Coupon[]
+  relusertenant     RelUserTenant[]
+  wallets           Wallet[]         @relation("TenantWallet")
 }
 
 model Coupon {
-  id           Int            @id @default(autoincrement())
-  description  String
-  name         String
-  imageUrl     String
-  tenant       Tenant         @relation(fields: [tenantId], references: [id])
-  tenantId     Int
+  id              Int               @id @default(autoincrement())
+  description     String
+  name            String
+  imageUrl        String
+  currency        String
+  discountValue   Int
+  discountType    DiscountType?     @relation(fields: [discountTypeId], references: [id])
+  discountTypeId  Int?
+  tenant          Tenant            @relation(fields: [tenantId], references: [id])
+  tenantId        Int
 }
 
 model Voucher {
-  id           Int            @id @default(autoincrement())
-  description  String
-  name         String
-  imageUrl     String
-  tenant       Tenant         @relation(fields: [tenantId], references: [id])
-  tenantId     Int
+  id              Int               @id @default(autoincrement())
+  description     String
+  name            String
+  imageUrl        String
+  currency        String
+  discountValue   Int
+  discountType    DiscountType?     @relation(fields: [discountTypeId], references: [id])
+  discountTypeId  Int?
+  tenant          Tenant            @relation(fields: [tenantId], references: [id])
+  tenantId        Int
+}
+
+model DiscountType {
+  id                Int              @id @default(autoincrement())
+  name              String
+  vouchers          Voucher[]
+  coupons           Coupon[]
 }
 
 model RelUserTenant {

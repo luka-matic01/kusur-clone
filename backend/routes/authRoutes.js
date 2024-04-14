@@ -8,7 +8,6 @@ router.post("/login", async (req, res) => {
   const { phoneNumber } = req.body;
 
   try {
-    // Check if user exists
     let user = await prisma.user.findUnique({
       where: {
         phoneNumber,
@@ -18,43 +17,88 @@ router.post("/login", async (req, res) => {
           include: {
             tenant: {
               include: {
-                vouchers: true,
-                coupons: true,
+                vouchers: {
+                  include: {
+                    discountType: true,
+                  },
+                },
+                coupons: {
+                  include: {
+                    discountType: true,
+                  },
+                },
               },
             },
           },
         },
+        wallet: true, // Include user's wallet
       },
     });
 
     if (!user) {
-      // Create a new user with predefined data
+      const voucherDiscountTypeExists = await prisma.discountType.findFirst({
+        where: { id: 1 },
+      });
+      const couponDiscountTypeExists = await prisma.discountType.findFirst({
+        where: { id: 2 },
+      });
+
+      if (!voucherDiscountTypeExists) {
+        await prisma.discountType.create({
+          data: {
+            id: 1,
+            name: "Voucher Discount",
+          },
+        });
+      }
+
+      if (!couponDiscountTypeExists) {
+        await prisma.discountType.create({
+          data: {
+            id: 2,
+            name: "Coupon Discount",
+          },
+        });
+      }
+
       user = await prisma.user.create({
         data: {
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
           phoneNumber: phoneNumber,
+          wallet: {
+            // Create wallet for the user
+            create: {
+              pointBalance: faker.number.int({ min: 0, max: 1000 }), // Example point balance
+            },
+          },
           relusertenant: {
-            create: Array.from({ length: 3 }, () => ({
+            create: Array.from({ length: 6 }, () => ({
               tenant: {
                 create: {
                   description: faker.lorem.words(),
-                  imageUrl: faker.image.imageUrl(),
+                  imageUrl: faker.image.url(),
                   vouchers: {
                     createMany: {
-                      data: Array.from({ length: 3 }, () => ({
+                      data: Array.from({ length: 6 }, () => ({
                         description: faker.lorem.words(),
                         name: faker.commerce.productName(),
-                        imageUrl: faker.image.imageUrl(),
+                        imageUrl: faker.image.url(),
+                        currency: "KM",
+                        discountValue: faker.number.int({ min: 10, max: 100 }),
+                        discountTypeId: 1,
                       })),
                     },
                   },
                   coupons: {
                     createMany: {
-                      data: Array.from({ length: 3 }, () => ({
+                      data: Array.from({ length: 6 }, () => ({
                         description: faker.lorem.words(),
                         name: faker.commerce.productName(),
-                        imageUrl: faker.image.imageUrl(),
+                        currency: "KM",
+                        discountValue: faker.number.int({ min: 10, max: 100 }),
+                        imageUrl: faker.image.url(),
+                        discountTypeId: 2,
                       })),
                     },
                   },
@@ -69,11 +113,23 @@ router.post("/login", async (req, res) => {
               tenant: true,
             },
           },
+          wallet: true, // Include user's wallet
+        },
+      });
+
+      // Create wallet for the user and connect tenants dynamically
+      const walletId = user.wallet.id;
+      const tenantIds = user.relusertenant.map(({ tenant }) => tenant.id);
+
+      await prisma.wallet.update({
+        where: { id: walletId },
+        data: {
+          tenants: {
+            connect: tenantIds.map((id) => ({ id })),
+          },
         },
       });
     }
-
-    console.log(user);
     return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in:", error);

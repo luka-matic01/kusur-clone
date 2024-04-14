@@ -36,7 +36,7 @@ const LoginScreen = () => {
 
   const sendVerificationCode = async () => {
     try {
-      if (phoneNumber.length !== 8) {
+      if (phoneNumber.length < 5) {
         setErrorMessage("Please enter a valid phone number");
         setTimeout(() => {
           setErrorMessage("");
@@ -52,7 +52,7 @@ const LoginScreen = () => {
         text1: "Success",
         text2: "SMS code has been sent to Your phone number  👋",
       });
-      // Navigate to the VerificationScreen and pass the verificationId as a prop
+
       router.push("/verify");
     } catch (error) {
       console.log(error);

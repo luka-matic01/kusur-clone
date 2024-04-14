@@ -20,7 +20,6 @@ const InitialLayout = () => {
       if (isSignedIn && !inTabsGroup) {
         try {
           const userId = await AsyncStorage.getItem("userId");
-          console.log(userId);
           router.replace(`/tenants/${userId}`);
         } catch (error) {
           console.error("Error fetching userId from AsyncStorage:", error);

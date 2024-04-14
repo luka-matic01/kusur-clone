@@ -32,14 +32,21 @@ const CustomInput = ({ label, value, onChangeText }) => (
 const VerifyScreen = () => {
   const router = useRouter();
   const [verificationCode, setVerificationCode] = useState("");
-  const [wrongCodeMessage, setWrongCodeMessage] = useState("");
+  const [error, setError] = useState("");
   const { signUp, setActive } = useSignUp();
 
   const submitVerificationCode = async () => {
     try {
-      const verifiedCode = await signUp.attemptPhoneNumberVerification({
-        code: verificationCode,
-      });
+      const verifiedCode = await signUp
+        .attemptPhoneNumberVerification({
+          code: verificationCode,
+        })
+        .catch((err) => {
+          setError(err.errors[0].longMessage);
+          setTimeout(() => {
+            setError("");
+          }, 3000);
+        });
 
       if (verifiedCode) {
         const response = await axios.post(
@@ -56,11 +63,6 @@ const VerifyScreen = () => {
           await AsyncStorage.setItem("userId", userId.toString());
           router.push(`/tenants/${userId}`);
         }
-      } else {
-        setWrongCodeMessage("Please enter a valid phone number");
-        setTimeout(() => {
-          setWrongCodeMessage("");
-        }, 3000);
       }
     } catch (error) {
       console.error("Error verifying code:", error);
@@ -90,9 +92,7 @@ const VerifyScreen = () => {
           value={verificationCode}
           onChangeText={setVerificationCode}
         />
-        {wrongCodeMessage && (
-          <Text className="text-red-400">{wrongCodeMessage}</Text>
-        )}
+        {error && <Text className="text-red-400">{error}</Text>}
         <TouchableOpacity
           onPress={submitVerificationCode}
           className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"

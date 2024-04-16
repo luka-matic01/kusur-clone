@@ -29,14 +29,18 @@ const LoginScreen = () => {
 
       <View className="flex justify-end">
         <View className="bg-white m-4 p-3 rounded-lg flex items-center justify-center space-y-3">
-          <Text className="text-[#403F40] text-[18px] font-bold">Login</Text>
+          <Text className="text-[#403F40] text-[18px] font-[Roboto-Black]">
+            Login
+          </Text>
           <TextInput
             placeholder="E-mail*"
             className="border w-[300px] border-[#F3F4F6] p-2"
           />
           <View>
             <TouchableOpacity className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md">
-              <Text className="text-[16px] text-white font-bold">Continue</Text>
+              <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                Continue
+              </Text>
               <NextIcon width={20} height={16} fill="white" />
             </TouchableOpacity>
           </View>
@@ -63,7 +67,9 @@ const LoginScreen = () => {
               </View>
             </View>
             <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-bold">Login with SMS</Text>
+              <Text className="text-[16px] font-[Roboto-Bold]">
+                Login with SMS
+              </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity className="flex flex-row">
@@ -73,7 +79,7 @@ const LoginScreen = () => {
               </View>
             </View>
             <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-bold text-[#757575]">
+              <Text className="text-[16px] font-[Roboto-Bold] text-[#757575]">
                 Login with Google
               </Text>
             </View>
@@ -85,7 +91,7 @@ const LoginScreen = () => {
               </View>
             </View>
             <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-bold text-white">
+              <Text className="text-[16px] font-[Roboto-Bold] text-white">
                 Login with Apple
               </Text>
             </View>
@@ -97,12 +103,12 @@ const LoginScreen = () => {
               </View>
             </View>
             <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-bold text-white">
+              <Text className="text-[16px] font-[Roboto-Bold] text-white">
                 Login with Facebook
               </Text>
             </View>
           </TouchableOpacity>
-          <Text className="underline text-[14px] text-[#3D44DB]">
+          <Text className="underline text-[14px] text-[#3D44DB] font-[Roboto-Regular]">
             Explore app
           </Text>
         </View>

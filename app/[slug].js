@@ -52,7 +52,7 @@ const Tenants = () => {
       <View className="flex flex-row justify-between items-center">
         <MenuIcon width={20} height={20} />
         <View className="flex flex-row items-center space-x-2">
-          <Text className="text-[#403F40] font-bold text-[14px]">
+          <Text className="text-[#403F40] font-[Roboto-Bold] text-[14px]">
             Dodaj objekat
           </Text>
           <PlusIcon width={18} height={18} />
@@ -60,15 +60,19 @@ const Tenants = () => {
       </View>
       <View className="bg-[#3D44DB] rounded-xl 6 p-6 flex flex-row items-center justify-between">
         <View className="flex flex-col items-center">
-          <Text className="text-[36px] font-bold text-white">
+          <Text className="text-[36px] font-[Roboto-Black] text-white">
             {userData.wallet.pointBalance}
           </Text>
-          <Text className="text-[13px font-bold text-white">Kusur bodova</Text>
+          <Text className="text-[13px font-[Roboto-Medium] text-white">
+            Kusur bodova
+          </Text>
         </View>
         <View className="relative">
           <View className="flex items-center justify-center p-4 border-[#665AF666] border-2 rounded-lg border-opacity-90">
-            <Text className="text-white font-bold text-[13px">Šta su</Text>
-            <Text className="text-white font-bold text-[13px">
+            <Text className="text-white font-[Roboto-Medium] text-[13px">
+              Šta su
+            </Text>
+            <Text className="text-white font-[Roboto-Medium] text-[13px">
               Kusur bodovi
             </Text>
           </View>
@@ -79,10 +83,10 @@ const Tenants = () => {
       </View>
       <View>
         <View className="flex flex-row items-center justify-between">
-          <Text className="text-[#403F40] font-bold text-[18px]">
+          <Text className="text-[#403F40] font-[Roboto-Bold] text-[18px]">
             Moji objekti
           </Text>
-          <Text className="text-[#403F40] text-[13px]">
+          <Text className="text-[#403F40] text-[13px] font-[Roboto-Medium]">
             Filtriraj po kategoriji
           </Text>
         </View>

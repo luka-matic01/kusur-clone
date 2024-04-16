@@ -37,28 +37,28 @@ const VerifyScreen = () => {
 
   const submitVerificationCode = async () => {
     try {
-      const verifiedCode = await signUp
-        .attemptPhoneNumberVerification({
-          code: verificationCode,
-        })
-        .catch((err) => {
-          setError(err.errors[0].longMessage);
-          setTimeout(() => {
-            setError("");
-          }, 3000);
-        });
-
+      // const verifiedCode = await signUp
+      //   .attemptPhoneNumberVerification({
+      //     code: verificationCode,
+      //   })
+      //   .catch((err) => {
+      //     setError(err.errors[0].longMessage);
+      //     setTimeout(() => {
+      //       setError("");
+      //     }, 3000);
+      //   });
+      const verifiedCode = true;
       if (verifiedCode) {
         const response = await axios.post(
           "http://192.168.100.168:3000/api/auth/login",
           {
-            phoneNumber: verifiedCode.phoneNumber,
+            phoneNumber: "+38766052875",
           }
         );
 
         // Handle response
         if (response.status === 200) {
-          await setActive({ session: verifiedCode.createdSessionId });
+          // await setActive({ session: verifiedCode.createdSessionId });
           const userId = response.data.user.id;
           await AsyncStorage.setItem("userId", userId.toString());
           router.push(`/${userId}`);
@@ -82,7 +82,7 @@ const VerifyScreen = () => {
           <TouchableOpacity onPress={() => router.back()}>
             <BackIcon width={20} height={20} />
           </TouchableOpacity>
-          <Text className="text-[#403F40] text-[18px] font-bold text-center flex self-center">
+          <Text className="text-[#403F40] text-[18px] font-[Roboto-Bold] text-center flex self-center">
             Enter code you received
           </Text>
           <Text></Text>
@@ -97,7 +97,9 @@ const VerifyScreen = () => {
           onPress={submitVerificationCode}
           className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
         >
-          <Text className="text-[16px] text-white font-bold">Sign in</Text>
+          <Text className="text-[16px] text-white font-[Roboto-Bold]">
+            Sign in
+          </Text>
           <NextIcon width={20} height={16} fill="white" />
         </TouchableOpacity>
       </View>

@@ -3,6 +3,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import CouponVoucherCard from "../../../components/CouponVoucherCard";
+import * as Animatable from "react-native-animatable";
 
 const TenantPage = () => {
   const navigation = useNavigation();
@@ -39,23 +40,28 @@ const TenantPage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }} className="mx-4 space-y-4">
-      <View className="rounded-xl bg-white 6 p-6 flex flex-row items-center justify-between mt-6">
+    <View style={{ flex: 1 }} className="px-4 space-y-4 bg-white">
+      <View
+        className="rounded-xl bg-white 6 p-6 flex flex-row items-center justify-between mt-6"
+        style={{ elevation: 12 }}
+      >
         <View className="flex flex-col items-center">
           <Text className="text-[36px] font-bold text-[#403F40]">
             {tenant.pointBalance}
           </Text>
-          <Text className="text-[13px] font-bold text-[#403F40]">
+          <Text className="text-[13px] font-medium text-[#403F40]">
             Bodova ukupno
           </Text>
         </View>
         <View className="relative">
           <View className="flex items-center justify-center p-3 border-[#100F100F] border-2 rounded-lg border-opacity-90">
-            <Text className="text-[#403F40] font-bold text-[20px]">30</Text>
-            <Text className="text-[#403F40] font-bold text-[13px]">
+            <Text className="text-[#403F40] font-[Roboto-Black] text-[20px]">
+              30
+            </Text>
+            <Text className="text-[#403F40] font-[Roboto-Medium] text-[13px]">
               Bodova potrebno
             </Text>
-            <Text className="text-[#403F40] font-bold text-[13px]">
+            <Text className="text-[#403F40] font-[Roboto-Medium] text-[13px]">
               do Nove nagrade!
             </Text>
           </View>
@@ -74,8 +80,8 @@ const TenantPage = () => {
             }}
             className={`${
               selectedOption === "coupons"
-                ? "text-[#3D44DB] font-bold"
-                : "text-[#403F40]"
+                ? "text-[#3D44DB] font-[Roboto-Bold]"
+                : "text-[#403F40] font-[Roboto-Regular]"
             } text-[16px]`}
           >
             Nagradni kuponi
@@ -90,8 +96,8 @@ const TenantPage = () => {
             }}
             className={`${
               selectedOption === "vouchers"
-                ? "text-[#3D44DB] font-bold"
-                : "text-[#403F40]"
+                ? "text-[#3D44DB] font-[Roboto-Bold]"
+                : "text-[#403F40] font-[Roboto-Regular]"
             } text-[16px]`}
           >
             Aktuelne ponude
@@ -100,19 +106,26 @@ const TenantPage = () => {
       </View>
       <ScrollView>
         <View className="flex flex-row flex-wrap justify-between">
-          {selectedOption === "coupons"
-            ? tenantData?.coupons.map((relUserTenant) => (
-                <CouponVoucherCard
-                  card={relUserTenant}
-                  key={relUserTenant.id}
-                />
-              ))
-            : tenantData?.vouchers.map((relUserTenant) => (
-                <CouponVoucherCard
-                  card={relUserTenant}
-                  key={relUserTenant.id}
-                />
-              ))}
+          {selectedOption === "coupons" &&
+            tenantData?.coupons.map((relUserTenant) => (
+              <Animatable.View
+                key={relUserTenant.id}
+                animation="slideInLeft"
+                duration={100}
+              >
+                <CouponVoucherCard card={relUserTenant} cardName="coupons" />
+              </Animatable.View>
+            ))}
+          {selectedOption === "vouchers" &&
+            tenantData?.vouchers.map((relUserTenant) => (
+              <Animatable.View
+                key={relUserTenant.id}
+                animation="slideInRight"
+                duration={100}
+              >
+                <CouponVoucherCard card={relUserTenant} cardName="vouchers" />
+              </Animatable.View>
+            ))}
         </View>
       </ScrollView>
     </View>

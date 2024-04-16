@@ -72,7 +72,7 @@ const LoginScreen = () => {
           <TouchableOpacity onPress={() => router.back()}>
             <BackIcon width={20} height={20} />
           </TouchableOpacity>
-          <Text className="text-[#403F40] text-[18px] font-bold text-center flex self-center">
+          <Text className="text-[#403F40] text-[18px] font-[Roboto-Black] text-center flex self-center">
             Sign in with SMS
           </Text>
           <Text></Text>
@@ -87,7 +87,7 @@ const LoginScreen = () => {
           className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
           onPress={sendVerificationCode}
         >
-          <Text className="text-[16px] text-white font-bold">
+          <Text className="text-[16px] text-white font-[Roboto-Bold]">
             Send SMS code
           </Text>
           <NextIcon width={20} height={16} fill="white" />

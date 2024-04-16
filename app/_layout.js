@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { Slot, Stack, Tabs, useRouter, useSegments } from "expo-router";
+import { Stack, Tabs, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen"; // Fix import here
 import Toast from "react-native-toast-message";
 import { CLERK_PUBLISHABLE_KEY } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View } from "react-native";
+import * as Font from "expo-font";
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();
@@ -43,24 +45,44 @@ const InitialLayout = () => {
 };
 
 const RootLayout = () => {
-  useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-    return () => {
-      // Cleanup function if needed
-    };
-  }, []);
+  const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    async function hideSplashScreen() {
+    async function prepare() {
+      try {
+        // Load fonts
+        await Font.loadAsync({
+          "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
+          "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+          "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
+          "Roboto-Black": require("../assets/fonts/Roboto-Black.ttf"),
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
       await SplashScreen.hideAsync();
     }
-    hideSplashScreen();
-  }, []);
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <InitialLayout />
-      <Toast />
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <InitialLayout />
+        <Toast />
+      </View>
     </ClerkProvider>
   );
 };

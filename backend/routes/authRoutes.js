@@ -76,13 +76,13 @@ router.post("/login", async (req, res) => {
             create: Array.from({ length: 6 }, () => ({
               tenant: {
                 create: {
-                  description: faker.lorem.words(),
+                  name: faker.commerce.product(),
                   imageUrl: faker.image.url(),
                   vouchers: {
                     createMany: {
                       data: Array.from({ length: 6 }, () => ({
                         description: faker.lorem.words(),
-                        name: faker.commerce.productName(),
+                        name: faker.commerce.product(),
                         imageUrl: faker.image.url(),
                         currency: "KM",
                         discountValue: faker.number.int({ min: 10, max: 100 }),
@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
                     createMany: {
                       data: Array.from({ length: 6 }, () => ({
                         description: faker.lorem.words(),
-                        name: faker.commerce.productName(),
+                        name: faker.commerce.product(),
                         currency: "KM",
                         discountValue: faker.number.int({ min: 10, max: 100 }),
                         imageUrl: faker.image.url(),

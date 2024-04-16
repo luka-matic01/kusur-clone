@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { Slot, useRouter, useSegments } from "expo-router";
+import { Slot, Stack, Tabs, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen"; // Fix import here
 import Toast from "react-native-toast-message";
 import { CLERK_PUBLISHABLE_KEY } from "@env";
@@ -35,7 +35,11 @@ const InitialLayout = () => {
     // Don't return anything from useEffect
   }, [isLoaded, isSignedIn]);
 
-  return <Slot />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
+  );
 };
 
 const RootLayout = () => {

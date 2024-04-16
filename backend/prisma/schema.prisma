@@ -32,7 +32,7 @@ model Wallet {
 
 model Tenant {
   id                Int              @id @default(autoincrement())
-  description       String
+  name              String
   imageUrl          String
   vouchers          Voucher[]
   coupons           Coupon[]

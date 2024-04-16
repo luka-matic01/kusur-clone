@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, ActivityIndicator, View, SafeAreaView, ScrollView } from "react-native";
+import {
+  Text,
+  ActivityIndicator,
+  View,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import PlusIcon from "../assets/tenants/plus-icon.svg";
@@ -30,7 +36,11 @@ const Tenants = () => {
   }, [slug]);
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <View className="h-screen flex items-center justify-center">
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   if (!userData) {
@@ -58,7 +68,9 @@ const Tenants = () => {
         <View className="relative">
           <View className="flex items-center justify-center p-4 border-[#665AF666] border-2 rounded-lg border-opacity-90">
             <Text className="text-white font-bold text-[13px">Šta su</Text>
-            <Text className="text-white font-bold text-[13px">Kusur bodovi</Text>
+            <Text className="text-white font-bold text-[13px">
+              Kusur bodovi
+            </Text>
           </View>
           <View className="absolute right-0 top-4 z-0">
             <QuestionIcon width={45} height={45} />
@@ -79,6 +91,7 @@ const Tenants = () => {
             <TenantCard
               key={relUserTenant.tenant.id}
               tenant={relUserTenant.tenant}
+              pointBalance={userData.wallet.pointBalance}
             />
           ))}
         </View>

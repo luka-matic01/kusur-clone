@@ -13,6 +13,7 @@ import SmsIcon from "../../assets/sms-icon.svg";
 import GoogleIcon from "../../assets/google-icon.svg";
 import AppleIcon from "../../assets/apple-icon.svg";
 import FacebookIcon from "../../assets/facebook-icon.svg";
+import { horizontalScale, verticalScale } from "../../utils/helpers";
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -23,8 +24,14 @@ const LoginScreen = () => {
       style={{ flex: 1, justifyContent: "start", alignItems: "center" }}
       className="min-h-screen"
     >
-      <View className="flex items-center jsutify-center mt-24 mb-12">
-        <KusurLogo width={140} height={35} />
+      <View
+        className="flex items-center jsutify-center"
+        style={{
+          marginTop: verticalScale(120),
+          marginBottom: verticalScale(60),
+        }}
+      >
+        <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
       </View>
 
       <View className="flex justify-end">
@@ -34,23 +41,32 @@ const LoginScreen = () => {
           </Text>
           <TextInput
             placeholder="E-mail*"
-            className="border w-[300px] border-[#F3F4F6] p-2"
+            className="border  border-[#F3F4F6] p-2"
+            style={{ width: horizontalScale(350) }}
           />
-          <View>
-            <TouchableOpacity className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md">
-              <Text className="text-[16px] text-white font-[Roboto-Bold]">
-                Continue
-              </Text>
-              <NextIcon width={20} height={16} fill="white" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            className="bg-[#3D44DB]  flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+            style={{ width: horizontalScale(350) }}
+          >
+            <Text
+              style={{ fontSize: horizontalScale(18) }}
+              className=" text-white font-[Roboto-Bold]"
+            >
+              Continue
+            </Text>
+            <NextIcon width={20} height={16} fill="white" />
+          </TouchableOpacity>
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View style={{ flex: 1, height: 1, backgroundColor: "#F3F4F6" }} />
             <View>
               <Text
-                style={{ width: 50, textAlign: "center", color: "#403F40" }}
-                className="text-[16px]"
+                style={{
+                  width: horizontalScale(50),
+                  textAlign: "center",
+                  color: "#403F40",
+                  fontSize: horizontalScale(18),
+                }}
               >
                 or
               </Text>
@@ -63,11 +79,21 @@ const LoginScreen = () => {
           >
             <View className="border border-[#E5E5E5] w-[50px] rounded-l-md">
               <View className="p-2">
-                <SmsIcon width={30} height={30} fill="black" />
+                <SmsIcon
+                  width={horizontalScale(38)}
+                  height={verticalScale(38)}
+                  fill="black"
+                />
               </View>
             </View>
-            <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-[Roboto-Bold]">
+            <View
+              className="border-t  border-b border-r border-[#E5E5E5]  flex items-center justify-center rounded-r-md"
+              style={{ width: horizontalScale(300) }}
+            >
+              <Text
+                style={{ fontSize: horizontalScale(18) }}
+                className=" font-[Roboto-Bold]"
+              >
                 Login with SMS
               </Text>
             </View>
@@ -75,11 +101,21 @@ const LoginScreen = () => {
           <TouchableOpacity className="flex flex-row">
             <View className="border border-[#E5E5E5] w-[50px] rounded-l-md">
               <View className="p-3">
-                <GoogleIcon width={25} height={25} fill="black" />
+                <GoogleIcon
+                  width={horizontalScale(30)}
+                  height={verticalScale(30)}
+                  fill="black"
+                />
               </View>
             </View>
-            <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-[Roboto-Bold] text-[#757575]">
+            <View
+              className="border-t  border-b border-r border-[#E5E5E5]  flex items-center justify-center rounded-r-md"
+              style={{ width: horizontalScale(300) }}
+            >
+              <Text
+                style={{ fontSize: horizontalScale(18) }}
+                className=" font-[Roboto-Bold] text-[#757575]"
+              >
                 Login with Google
               </Text>
             </View>
@@ -87,11 +123,21 @@ const LoginScreen = () => {
           <TouchableOpacity className="flex flex-row bg-black rounded-md">
             <View className="border border-[#E5E5E5] w-[50px] rounded-l-md">
               <View className="p-3">
-                <AppleIcon width={25} height={25} fill="white" />
+                <AppleIcon
+                  width={horizontalScale(30)}
+                  height={verticalScale(30)}
+                  fill="white"
+                />
               </View>
             </View>
-            <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-[Roboto-Bold] text-white">
+            <View
+              className="border-t  border-b border-r border-[#E5E5E5]  flex items-center justify-center rounded-r-md"
+              style={{ width: horizontalScale(300) }}
+            >
+              <Text
+                style={{ fontSize: horizontalScale(18) }}
+                className=" font-[Roboto-Bold] text-white"
+              >
                 Login with Apple
               </Text>
             </View>
@@ -99,11 +145,20 @@ const LoginScreen = () => {
           <TouchableOpacity className="flex flex-row bg-[#1877F1] rounded-md">
             <View className="border border-[#E5E5E5] w-[50px] rounded-l-md">
               <View className="p-3">
-                <FacebookIcon width={25} height={25} />
+                <FacebookIcon
+                  width={horizontalScale(30)}
+                  height={verticalScale(30)}
+                />
               </View>
             </View>
-            <View className="border-t  border-b border-r border-[#E5E5E5] w-[250px] flex items-center justify-center rounded-r-md">
-              <Text className="text-[16px] font-[Roboto-Bold] text-white">
+            <View
+              className="border-t  border-b border-r border-[#E5E5E5]  flex items-center justify-center rounded-r-md"
+              style={{ width: horizontalScale(300) }}
+            >
+              <Text
+                style={{ fontSize: horizontalScale(18) }}
+                className=" font-[Roboto-Bold] text-white"
+              >
                 Login with Facebook
               </Text>
             </View>

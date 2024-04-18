@@ -13,9 +13,10 @@ import KusurLogo from "../../assets/kusur-logo.svg";
 import NextIcon from "../../assets/next.svg";
 import BackIcon from "../../assets/back.svg";
 import Toast from "react-native-toast-message";
+import { horizontalScale, verticalScale } from "../../utils/helpers";
 
 const CustomInput = ({ label, ...inputProps }) => (
-  <View style={styles.container} className="w-[300px]">
+  <View style={styles.container}>
     <Text style={styles.label}>{label}</Text>
     <View style={styles.inputContainer}>
       <Text style={styles.countryCode}>+387 │</Text>
@@ -43,9 +44,18 @@ const LoginScreen = () => {
         }, 3000);
         return;
       }
-      await signUp.create({
-        phoneNumber: `+387${phoneNumber}`,
-      });
+
+      await signUp
+        .create({
+          phoneNumber: `+387${phoneNumber}`,
+        })
+        .catch((err) => {
+          setErrorMessage(err.errors[0].message);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 3000);
+        });
+
       await signUp.preparePhoneNumberVerification();
       Toast.show({
         type: "success",
@@ -65,7 +75,7 @@ const LoginScreen = () => {
       style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
     >
       <View className="flex items-center justify-center mt-24 mb-12">
-        <KusurLogo width={140} height={35} />
+        <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
       </View>
       <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
         <View className="flex flex-row items-center justify-between mb-10">
@@ -100,12 +110,13 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
+    width: horizontalScale(350),
   },
   label: {
     position: "absolute",
-    top: -10,
-    left: 5,
-    fontSize: 14,
+    top: verticalScale(-15),
+    left: horizontalScale(5),
+    fontSize: horizontalScale(16),
     backgroundColor: "white",
     color: "#403F40CC",
     zIndex: 30,
@@ -118,13 +129,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   countryCode: {
-    paddingHorizontal: 7,
-    fontSize: 14,
+    paddingHorizontal: horizontalScale(7),
+    fontSize: horizontalScale(16),
     color: "#403F40CC",
   },
   input: {
     flex: 1,
-    padding: 7,
+    padding: horizontalScale(7),
   },
 });
 

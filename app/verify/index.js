@@ -14,6 +14,8 @@ import NextIcon from "../../assets/next.svg";
 import BackIcon from "../../assets/back.svg";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { horizontalScale, verticalScale } from "../../utils/helpers";
+import { MY_IP } from "@env";
 
 const CustomInput = ({ label, value, onChangeText }) => (
   <View style={styles.container} className="w-[300px]">
@@ -37,31 +39,30 @@ const VerifyScreen = () => {
 
   const submitVerificationCode = async () => {
     try {
-      // const verifiedCode = await signUp
-      //   .attemptPhoneNumberVerification({
-      //     code: verificationCode,
-      //   })
-      //   .catch((err) => {
-      //     setError(err.errors[0].longMessage);
-      //     setTimeout(() => {
-      //       setError("");
-      //     }, 3000);
-      //   });
-      const verifiedCode = true;
+      const verifiedCode = await signUp
+        .attemptPhoneNumberVerification({
+          code: verificationCode,
+        })
+        .catch((err) => {
+          setError(err.errors[0].longMessage);
+          setTimeout(() => {
+            setError("");
+          }, 3000);
+        });
       if (verifiedCode) {
         const response = await axios.post(
-          "http://192.168.100.168:3000/api/auth/login",
+          `http://${MY_IP}:3000/api/auth/login`,
           {
-            phoneNumber: "+38766052875",
+            phoneNumber: verifiedCode.phoneNumber,
           }
         );
 
         // Handle response
         if (response.status === 200) {
-          // await setActive({ session: verifiedCode.createdSessionId });
+          await setActive({ session: verifiedCode.createdSessionId });
           const userId = response.data.user.id;
           await AsyncStorage.setItem("userId", userId.toString());
-          router.push(`/${userId}`);
+          router.push(`/home/${userId}`);
         }
       }
     } catch (error) {
@@ -110,12 +111,13 @@ const VerifyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
+    width: horizontalScale(350),
   },
   label: {
     position: "absolute",
-    top: -10,
-    left: 5,
-    fontSize: 14,
+    top: verticalScale(-15),
+    left: horizontalScale(5),
+    fontSize: horizontalScale(16),
     backgroundColor: "white",
     color: "#403F40CC",
     zIndex: 30,
@@ -128,13 +130,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   countryCode: {
-    paddingHorizontal: 7,
-    fontSize: 14,
+    paddingHorizontal: horizontalScale(7),
+    fontSize: horizontalScale(16),
     color: "#403F40CC",
   },
   input: {
     flex: 1,
-    padding: 7,
+    padding: horizontalScale(7),
   },
 });
 

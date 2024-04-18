@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialIcons } from "@expo/vector-icons";
 import QrCodeIcon from "../../assets/qrCode-icon.svg";
+import { horizontalScale, verticalScale } from "../../utils/helpers";
 
 const TabsLayout = () => {
   const [userId, setUserId] = useState(null);
@@ -24,7 +25,14 @@ const TabsLayout = () => {
   }, []);
 
   return (
-    <Tabs screenOptions={{ tabBarStyle: { height: 60, paddingHorizontal: 6 } }}>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          height: verticalScale(90),
+          paddingHorizontal: horizontalScale(6),
+        },
+      }}
+    >
       <Tabs.Screen
         name="tenant/[slug]"
         options={{
@@ -40,7 +48,7 @@ const TabsLayout = () => {
                 <Text
                   style={{
                     color: focused ? "#3D44DB" : "black",
-                    fontSize: 16,
+                    fontSize: horizontalScale(16),
                     fontWeight: focused ? "bold" : "normal",
                   }}
                 >
@@ -51,7 +59,8 @@ const TabsLayout = () => {
           },
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => router.push(`/${userId}`)}
+              onPress={() => router.push(`/home/${userId}`)}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               className="ml-2"
             >
               <ReturnBack width={18} height={18} />
@@ -76,7 +85,8 @@ const TabsLayout = () => {
                   focused
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
-                } text-[16px]`}
+                } `}
+                style={{ fontSize: horizontalScale(16) }}
               >
                 Ponuda
               </Text>
@@ -127,7 +137,8 @@ const TabsLayout = () => {
                   focused
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
-                } text-[16px]`}
+                } `}
+                style={{ fontSize: horizontalScale(16) }}
               >
                 Info
               </Text>
@@ -153,7 +164,8 @@ const TabsLayout = () => {
                   focused
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
-                } text-[16px]`}
+                } `}
+                style={{ fontSize: horizontalScale(16) }}
               >
                 Ostalo
               </Text>

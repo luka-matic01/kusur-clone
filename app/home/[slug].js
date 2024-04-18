@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  ActivityIndicator,
-  View,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { Text, ActivityIndicator, View, ScrollView } from "react-native";
 import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
-import PlusIcon from "../assets/tenants/plus-icon.svg";
-import MenuIcon from "../assets/tenants/menu-icon.svg";
-import QuestionIcon from "../assets/tenants/question-icon.svg";
-import TenantCard from "../components/TenantCard";
+import QuestionIcon from "../../assets/tenants/question-icon.svg";
+import TenantCard from "../../components/TenantCard";
+import { horizontalScale } from "../../utils/helpers";
+import { MY_IP } from "@env";
 
 const Tenants = () => {
   const { slug } = useLocalSearchParams();
@@ -22,7 +16,7 @@ const Tenants = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.100.168:3000/api/users/${slug}`
+          `http://${MY_IP}:3000/api/users/${slug}`
         );
         setUserData(response.data);
       } catch (error) {
@@ -48,31 +42,37 @@ const Tenants = () => {
   }
 
   return (
-    <ScrollView className="p-3 mt-5 space-y-6">
-      <View className="flex flex-row justify-between items-center">
-        <MenuIcon width={20} height={20} />
-        <View className="flex flex-row items-center space-x-2">
-          <Text className="text-[#403F40] font-[Roboto-Bold] text-[14px]">
-            Dodaj objekat
-          </Text>
-          <PlusIcon width={18} height={18} />
-        </View>
-      </View>
-      <View className="bg-[#3D44DB] rounded-xl 6 p-6 flex flex-row items-center justify-between">
+    <ScrollView className="px-4 space-y-6 bg-white" style={{ flex: 1 }}>
+      <View
+        className="bg-[#3D44DB] rounded-xl 6 p-6 flex flex-row items-center justify-between"
+        style={{ elevation: 7 }}
+      >
         <View className="flex flex-col items-center">
-          <Text className="text-[36px] font-[Roboto-Black] text-white">
+          <Text
+            className="font-[Roboto-Black] text-white"
+            style={{ fontSize: horizontalScale(40) }}
+          >
             {userData.wallet.pointBalance}
           </Text>
-          <Text className="text-[13px font-[Roboto-Medium] text-white">
+          <Text
+            className="font-[Roboto-Medium] text-white"
+            style={{ fontSize: horizontalScale(15) }}
+          >
             Kusur bodova
           </Text>
         </View>
         <View className="relative">
           <View className="flex items-center justify-center p-4 border-[#665AF666] border-2 rounded-lg border-opacity-90">
-            <Text className="text-white font-[Roboto-Medium] text-[13px">
+            <Text
+              className="text-white font-[Roboto-Medium]"
+              style={{ fontSize: horizontalScale(15) }}
+            >
               Šta su
             </Text>
-            <Text className="text-white font-[Roboto-Medium] text-[13px">
+            <Text
+              className="text-white font-[Roboto-Medium]"
+              style={{ fontSize: horizontalScale(15) }}
+            >
               Kusur bodovi
             </Text>
           </View>
@@ -83,10 +83,16 @@ const Tenants = () => {
       </View>
       <View>
         <View className="flex flex-row items-center justify-between">
-          <Text className="text-[#403F40] font-[Roboto-Bold] text-[18px]">
+          <Text
+            className="text-[#403F40] font-[Roboto-Bold]"
+            style={{ fontSize: horizontalScale(20) }}
+          >
             Moji objekti
           </Text>
-          <Text className="text-[#403F40] text-[13px] font-[Roboto-Medium]">
+          <Text
+            className="text-[#403F40] font-[Roboto-Medium]"
+            style={{ fontSize: horizontalScale(15) }}
+          >
             Filtriraj po kategoriji
           </Text>
         </View>

@@ -4,25 +4,24 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import CouponVoucherCard from "../../../components/CouponVoucherCard";
 import * as Animatable from "react-native-animatable";
+import { horizontalScale } from "../../../utils/helpers";
+import { MY_IP } from "@env";
 
 const TenantPage = () => {
   const navigation = useNavigation();
   const tenant = useLocalSearchParams();
   const [tenantData, setTenantData] = useState();
-  const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState("coupons");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.100.168:3000/api/tenant/${tenant.slug}`
+          `http://${MY_IP}:3000/api/tenant/${tenant.slug}`
         );
         setTenantData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -42,14 +41,17 @@ const TenantPage = () => {
   return (
     <View style={{ flex: 1 }} className="px-4 space-y-4 bg-white">
       <View
-        className="rounded-xl bg-white 6 p-6 flex flex-row items-center justify-between mt-6"
-        style={{ elevation: 12 }}
+        className="rounded-xl bg-white 6 flex flex-row items-center justify-between mt-6"
+        style={{ elevation: 12, padding: horizontalScale(24) }}
       >
         <View className="flex flex-col items-center">
-          <Text className="text-[36px] font-bold text-[#403F40]">
+          <Text
+            className="font-bold text-[#403F40]"
+            style={{ fontSize: horizontalScale(40) }}
+          >
             {tenant.pointBalance}
           </Text>
-          <Text className="text-[13px] font-medium text-[#403F40]">
+          <Text className="font-[Roboto-Medium] text-[#403F40]">
             Bodova ukupno
           </Text>
         </View>
@@ -65,9 +67,6 @@ const TenantPage = () => {
               do Nove nagrade!
             </Text>
           </View>
-          <View className="absolute right-0 top-4 z-0">
-            {/* <QuestionIcon width={45} height={45} /> */}
-          </View>
         </View>
       </View>
       <View className="flex flex-row items-center space-x-4">
@@ -77,12 +76,13 @@ const TenantPage = () => {
               borderBottomWidth: selectedOption === "coupons" ? 2 : 0,
               borderColor: "#3D44DB",
               paddingBottom: 6,
+              fontSize: horizontalScale(18),
             }}
             className={`${
               selectedOption === "coupons"
                 ? "text-[#3D44DB] font-[Roboto-Bold]"
                 : "text-[#403F40] font-[Roboto-Regular]"
-            } text-[16px]`}
+            } `}
           >
             Nagradni kuponi
           </Text>
@@ -93,12 +93,13 @@ const TenantPage = () => {
               borderBottomWidth: selectedOption === "vouchers" ? 2 : 0,
               borderColor: "#3D44DB",
               paddingBottom: 6,
+              fontSize: horizontalScale(18),
             }}
             className={`${
               selectedOption === "vouchers"
                 ? "text-[#3D44DB] font-[Roboto-Bold]"
                 : "text-[#403F40] font-[Roboto-Regular]"
-            } text-[16px]`}
+            }`}
           >
             Aktuelne ponude
           </Text>

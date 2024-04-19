@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -17,7 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
 import { MY_IP } from "@env";
 
-const CustomInput = ({ label, value, onChangeText }) => (
+const CustomInput = ({ label, errorMessage, value, onChangeText }) => (
   <View style={styles.container} className="w-[300px]">
     <Text style={styles.label}>{label}</Text>
     <View style={styles.inputContainer}>
@@ -28,13 +30,14 @@ const CustomInput = ({ label, value, onChangeText }) => (
         keyboardType="number-pad"
       />
     </View>
+    {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
   </View>
 );
 
 const VerifyScreen = () => {
   const router = useRouter();
   const [verificationCode, setVerificationCode] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { signUp, setActive } = useSignUp();
 
   const submitVerificationCode = async () => {
@@ -44,9 +47,9 @@ const VerifyScreen = () => {
           code: verificationCode,
         })
         .catch((err) => {
-          setError(err.errors[0].longMessage);
+          setErrorMessage(err.errors[0].longMessage);
           setTimeout(() => {
-            setError("");
+            setErrorMessage("");
           }, 3000);
         });
       if (verifiedCode) {
@@ -56,6 +59,7 @@ const VerifyScreen = () => {
             phoneNumber: verifiedCode.phoneNumber,
           }
         );
+        console.log(response);
 
         // Handle response
         if (response.status === 200) {
@@ -71,40 +75,51 @@ const VerifyScreen = () => {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/app-background.jpg")} // Specify the background image
-      style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <View className="flex items-center justify-center mt-24 mb-12">
-        <KusurLogo width={140} height={35} />
-      </View>
-      <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
-        <View className="flex flex-row items-center justify-between mb-10">
-          <TouchableOpacity onPress={() => router.back()}>
-            <BackIcon width={20} height={20} />
-          </TouchableOpacity>
-          <Text className="text-[#403F40] text-[18px] font-[Roboto-Bold] text-center flex self-center">
-            Enter code you received
-          </Text>
-          <Text></Text>
+      <ImageBackground
+        source={require("../../assets/app-background.jpg")} // Specify the background image
+        style={{
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View className="flex items-center justify-center mt-24 mb-12">
+          <KusurLogo width={140} height={35} />
         </View>
-        <CustomInput
-          label="SMS code"
-          value={verificationCode}
-          onChangeText={setVerificationCode}
-        />
-        {error && <Text className="text-red-400">{error}</Text>}
-        <TouchableOpacity
-          onPress={submitVerificationCode}
-          className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
-        >
-          <Text className="text-[16px] text-white font-[Roboto-Bold]">
-            Sign in
-          </Text>
-          <NextIcon width={20} height={16} fill="white" />
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+        <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
+          <View className="flex flex-row items-center justify-between mb-10">
+            <TouchableOpacity onPress={() => router.back()}>
+              <BackIcon width={20} height={20} />
+            </TouchableOpacity>
+            <Text className="text-[#403F40] text-[18px] font-[Roboto-Bold] text-center flex self-center">
+              Enter code you received
+            </Text>
+            <Text></Text>
+          </View>
+          <CustomInput
+            label="SMS code"
+            value={verificationCode}
+            onChangeText={setVerificationCode}
+            errorMessage={errorMessage}
+          />
+          <View className="flex items-center justify-center">
+            <TouchableOpacity
+              onPress={submitVerificationCode}
+              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+            >
+              <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                Sign in
+              </Text>
+              <NextIcon width={20} height={16} fill="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -137,6 +152,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     padding: horizontalScale(7),
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: horizontalScale(14),
+    marginTop: verticalScale(5),
   },
 });
 

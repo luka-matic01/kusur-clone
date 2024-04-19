@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import CouponVoucherCard from "../../../components/CouponVoucherCard";
 import * as Animatable from "react-native-animatable";
-import { horizontalScale } from "../../../utils/helpers";
+import { horizontalScale, verticalScale } from "../../../utils/helpers";
 import { MY_IP } from "@env";
 
 const TenantPage = () => {
@@ -41,8 +41,24 @@ const TenantPage = () => {
   return (
     <View style={{ flex: 1 }} className="px-4 space-y-4 bg-white">
       <View
-        className="rounded-xl bg-white 6 flex flex-row items-center justify-between mt-6"
-        style={{ elevation: 12, padding: horizontalScale(24) }}
+        style={{
+          borderRadius: 6,
+          backgroundColor: "white",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginTop: verticalScale(20),
+          paddingHorizontal: horizontalScale(24),
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+          padding: horizontalScale(24),
+        }}
       >
         <View className="flex flex-col items-center">
           <Text
@@ -70,11 +86,15 @@ const TenantPage = () => {
         </View>
       </View>
       <View className="flex flex-row items-center space-x-4">
-        <TouchableOpacity onPress={() => handleOptionSelect("coupons")}>
+        <TouchableOpacity
+          onPress={() => handleOptionSelect("coupons")}
+          style={{
+            borderBottomWidth: selectedOption === "coupons" ? 2 : 0,
+            borderColor: "#3D44DB",
+          }}
+        >
           <Text
             style={{
-              borderBottomWidth: selectedOption === "coupons" ? 2 : 0,
-              borderColor: "#3D44DB",
               paddingBottom: 6,
               fontSize: horizontalScale(18),
             }}
@@ -87,11 +107,15 @@ const TenantPage = () => {
             Nagradni kuponi
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleOptionSelect("vouchers")}>
+        <TouchableOpacity
+          onPress={() => handleOptionSelect("vouchers")}
+          style={{
+            borderBottomWidth: selectedOption === "vouchers" ? 2 : 0,
+            borderColor: "#3D44DB",
+          }}
+        >
           <Text
             style={{
-              borderBottomWidth: selectedOption === "vouchers" ? 2 : 0,
-              borderColor: "#3D44DB",
               paddingBottom: 6,
               fontSize: horizontalScale(18),
             }}

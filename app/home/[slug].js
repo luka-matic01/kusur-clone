@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import QuestionIcon from "../../assets/tenants/question-icon.svg";
 import TenantCard from "../../components/TenantCard";
-import { horizontalScale } from "../../utils/helpers";
+import { horizontalScale, verticalScale } from "../../utils/helpers";
 import { MY_IP } from "@env";
 
 const Tenants = () => {
@@ -45,7 +45,17 @@ const Tenants = () => {
     <ScrollView className="px-4 space-y-6 bg-white" style={{ flex: 1 }}>
       <View
         className="bg-[#3D44DB] rounded-xl 6 p-6 flex flex-row items-center justify-between"
-        style={{ elevation: 7 }}
+        style={{
+          elevation: 5,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.75,
+          shadowRadius: 3.84,
+          marginTop: verticalScale(20),
+        }}
       >
         <View className="flex flex-col items-center">
           <Text

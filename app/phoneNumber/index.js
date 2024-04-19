@@ -6,6 +6,8 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -15,7 +17,7 @@ import BackIcon from "../../assets/back.svg";
 import Toast from "react-native-toast-message";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
 
-const CustomInput = ({ label, ...inputProps }) => (
+const CustomInput = ({ label, errorMessage, ...inputProps }) => (
   <View style={styles.container}>
     <Text style={styles.label}>{label}</Text>
     <View style={styles.inputContainer}>
@@ -26,6 +28,7 @@ const CustomInput = ({ label, ...inputProps }) => (
         keyboardType="number-pad"
       />
     </View>
+    {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
   </View>
 );
 
@@ -70,40 +73,51 @@ const LoginScreen = () => {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/app-background.jpg")} // Specify the background image
-      style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <View className="flex items-center justify-center mt-24 mb-12">
-        <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
-      </View>
-      <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
-        <View className="flex flex-row items-center justify-between mb-10">
-          <TouchableOpacity onPress={() => router.back()}>
-            <BackIcon width={20} height={20} />
-          </TouchableOpacity>
-          <Text className="text-[#403F40] text-[18px] font-[Roboto-Black] text-center flex self-center">
-            Sign in with SMS
-          </Text>
-          <Text></Text>
+      <ImageBackground
+        source={require("../../assets/app-background.jpg")}
+        style={{
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View className="flex items-center justify-center mt-24 mb-12">
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
         </View>
-        <CustomInput
-          label="Your number"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-        />
-        {errorMessage && <Text className="text-red-400">{errorMessage}</Text>}
-        <TouchableOpacity
-          className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
-          onPress={sendVerificationCode}
-        >
-          <Text className="text-[16px] text-white font-[Roboto-Bold]">
-            Send SMS code
-          </Text>
-          <NextIcon width={20} height={16} fill="white" />
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+        <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
+          <View className="flex flex-row items-center justify-between mb-10">
+            <TouchableOpacity onPress={() => router.back()}>
+              <BackIcon width={20} height={20} />
+            </TouchableOpacity>
+            <Text className="text-[#403F40] text-[18px] font-[Roboto-Black] text-center flex self-center">
+              Sign in with SMS
+            </Text>
+            <Text></Text>
+          </View>
+          <CustomInput
+            label="Your number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            errorMessage={errorMessage}
+          />
+          <View className="flex items-center justify-center">
+            <TouchableOpacity
+              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+              onPress={sendVerificationCode}
+            >
+              <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                Send SMS code
+              </Text>
+              <NextIcon width={20} height={16} fill="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -136,6 +150,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     padding: horizontalScale(7),
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: horizontalScale(14),
+    marginTop: verticalScale(5),
   },
 });
 

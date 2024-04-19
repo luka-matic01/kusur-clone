@@ -1,12 +1,12 @@
-const express = require('express');
-const { PrismaClient } = require('@prisma/client');
+const express = require("express");
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get('/:slug', async (req, res) => {
+router.get("/:slug", async (req, res) => {
   const { slug } = req.params;
-  const userId = parseInt(slug)
+  const userId = parseInt(slug);
 
   try {
     const user = await prisma.user.findUnique({
@@ -29,13 +29,13 @@ router.get('/:slug', async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     res.json(user);
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

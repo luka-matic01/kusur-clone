@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
 import { Redirect } from "expo-router";
+import { SignedOut } from "@clerk/clerk-react";
 
 const Index = () => {
-  return <Redirect href="/login" />;
+  return (
+    <SignedOut>
+      <Redirect href="/login" />
+    </SignedOut>
+  );
 };
 
 export default Index;

@@ -7,6 +7,7 @@ import { CLERK_PUBLISHABLE_KEY } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
 import * as Font from "expo-font";
+import * as SecureStore from "expo-secure-store";
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();
@@ -73,6 +74,23 @@ const RootLayout = () => {
     }
   }, [appIsReady]);
 
+  const tokenCache = {
+    async getToken(key) {
+      try {
+        return SecureStore.getItemAsync(key);
+      } catch (err) {
+        return null;
+      }
+    },
+    async saveToken(key, value) {
+      try {
+        return SecureStore.setItemAsync(key, value);
+      } catch (err) {
+        return;
+      }
+    },
+  };
+
   if (!appIsReady) {
     return null;
   }
@@ -80,6 +98,7 @@ const RootLayout = () => {
   return (
     <ClerkProvider
       publishableKey={"pk_test_a2Vlbi10ZXJtaXRlLTk3LmNsZXJrLmFjY291bnRzLmRldiQ"}
+      tokenCache={tokenCache}
     >
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <InitialLayout />

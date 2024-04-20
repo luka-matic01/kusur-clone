@@ -9,7 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@clerk/clerk-expo": "^0.20.16",
+    "@clerk/clerk-expo": "^1.0.0",
+    "@clerk/clerk-react": "^5.0.0",
     "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-native-firebase/app": "^19.1.2",
@@ -31,8 +32,8 @@
     "expo-updates": "~0.24.12",
     "install": "^0.13.0",
     "nativewind": "^2.0.11",
-    "npm": "^10.5.1",
     "react": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-native": "0.73.6",
     "react-native-animatable": "^1.4.0",
     "react-native-dotenv": "^3.4.11",

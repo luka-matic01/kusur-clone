@@ -5,7 +5,6 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import CouponVoucherCard from "../../../components/CouponVoucherCard";
 import * as Animatable from "react-native-animatable";
 import { horizontalScale, verticalScale } from "../../../utils/helpers";
-import { MY_IP } from "@env";
 
 const TenantPage = () => {
   const navigation = useNavigation();
@@ -17,7 +16,7 @@ const TenantPage = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://${MY_IP}:3000/api/tenant/${tenant.slug}`
+          `https://backend-kusur-clone.onrender.com/api/tenant/${tenant.slug}`
         );
         setTenantData(response.data);
       } catch (error) {
@@ -63,23 +62,35 @@ const TenantPage = () => {
         <View className="flex flex-col items-center">
           <Text
             className="font-bold text-[#403F40]"
-            style={{ fontSize: horizontalScale(40) }}
+            style={{ fontSize: horizontalScale(45) }}
           >
             {tenant.pointBalance}
           </Text>
-          <Text className="font-[Roboto-Medium] text-[#403F40]">
+          <Text
+            className="font-[Roboto-Medium] text-[#403F40]"
+            style={{ fontSize: horizontalScale(12) }}
+          >
             Bodova ukupno
           </Text>
         </View>
         <View className="relative">
           <View className="flex items-center justify-center p-3 border-[#100F100F] border-2 rounded-lg border-opacity-90">
-            <Text className="text-[#403F40] font-[Roboto-Black] text-[20px]">
+            <Text
+              className="text-[#403F40] font-[Roboto-Black]"
+              style={{ fontSize: horizontalScale(24) }}
+            >
               30
             </Text>
-            <Text className="text-[#403F40] font-[Roboto-Medium] text-[13px]">
+            <Text
+              className="text-[#403F40] font-[Roboto-Medium]"
+              style={{ fontSize: horizontalScale(12) }}
+            >
               Bodova potrebno
             </Text>
-            <Text className="text-[#403F40] font-[Roboto-Medium] text-[13px]">
+            <Text
+              className="text-[#403F40] font-[Roboto-Medium]"
+              style={{ fontSize: horizontalScale(12) }}
+            >
               do Nove nagrade!
             </Text>
           </View>

@@ -5,7 +5,6 @@ import { useLocalSearchParams } from "expo-router";
 import QuestionIcon from "../../assets/tenants/question-icon.svg";
 import TenantCard from "../../components/TenantCard";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
-import { MY_IP } from "@env";
 
 const Tenants = () => {
   const { slug } = useLocalSearchParams();
@@ -16,7 +15,7 @@ const Tenants = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://${MY_IP}:3000/api/users/${slug}`
+          `https://backend-kusur-clone.onrender.com/api/users/${slug}`
         );
         setUserData(response.data);
       } catch (error) {
@@ -54,19 +53,19 @@ const Tenants = () => {
           },
           shadowOpacity: 0.75,
           shadowRadius: 3.84,
-          marginTop: verticalScale(20),
+          marginTop: verticalScale(15),
         }}
       >
         <View className="flex flex-col items-center">
           <Text
             className="font-[Roboto-Black] text-white"
-            style={{ fontSize: horizontalScale(40) }}
+            style={{ fontSize: horizontalScale(45) }}
           >
             {userData.wallet.pointBalance}
           </Text>
           <Text
             className="font-[Roboto-Medium] text-white"
-            style={{ fontSize: horizontalScale(15) }}
+            style={{ fontSize: horizontalScale(12) }}
           >
             Kusur bodova
           </Text>
@@ -75,19 +74,19 @@ const Tenants = () => {
           <View className="flex items-center justify-center p-4 border-[#665AF666] border-2 rounded-lg border-opacity-90">
             <Text
               className="text-white font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(15) }}
+              style={{ fontSize: horizontalScale(12) }}
             >
               Šta su
             </Text>
             <Text
               className="text-white font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(15) }}
+              style={{ fontSize: horizontalScale(12) }}
             >
               Kusur bodovi
             </Text>
           </View>
-          <View className="absolute right-0 top-4 z-0">
-            <QuestionIcon width={45} height={45} />
+          <View className="absolute right-1 top-4 z-0">
+            <QuestionIcon width={35} height={35} />
           </View>
         </View>
       </View>
@@ -95,13 +94,13 @@ const Tenants = () => {
         <View className="flex flex-row items-center justify-between">
           <Text
             className="text-[#403F40] font-[Roboto-Bold]"
-            style={{ fontSize: horizontalScale(20) }}
+            style={{ fontSize: horizontalScale(18) }}
           >
             Moji objekti
           </Text>
           <Text
             className="text-[#403F40] font-[Roboto-Medium]"
-            style={{ fontSize: horizontalScale(15) }}
+            style={{ fontSize: horizontalScale(13) }}
           >
             Filtriraj po kategoriji
           </Text>

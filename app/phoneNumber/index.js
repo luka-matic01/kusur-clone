@@ -21,7 +21,9 @@ const CustomInput = ({ label, errorMessage, ...inputProps }) => (
   <View style={styles.container}>
     <Text style={styles.label}>{label}</Text>
     <View style={styles.inputContainer}>
-      <Text style={styles.countryCode}>+387 │</Text>
+      <Text style={styles.countryCode}>
+        +387 <Text style={styles.inputOpacity}> │</Text>
+      </Text>
       <TextInput
         {...inputProps}
         style={styles.input}
@@ -155,6 +157,11 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: horizontalScale(14),
     marginTop: verticalScale(5),
+  },
+  inputOpacity: {
+    flex: 1,
+    color: "rgba(0, 0, 0, 0.1)",
+    fontSize: horizontalScale(16),
   },
 });
 

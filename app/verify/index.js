@@ -17,7 +17,6 @@ import BackIcon from "../../assets/back.svg";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
-import { MY_IP } from "@env";
 
 const CustomInput = ({ label, errorMessage, value, onChangeText }) => (
   <View style={styles.container} className="w-[300px]">
@@ -54,12 +53,11 @@ const VerifyScreen = () => {
         });
       if (verifiedCode) {
         const response = await axios.post(
-          `http://${MY_IP}:3000/api/auth/login`,
+          `https://backend-kusur-clone.onrender.com/api/auth/login`,
           {
             phoneNumber: verifiedCode.phoneNumber,
           }
         );
-        console.log(response);
 
         // Handle response
         if (response.status === 200) {

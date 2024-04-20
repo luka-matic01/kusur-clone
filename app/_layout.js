@@ -78,7 +78,9 @@ const RootLayout = () => {
   }
 
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider
+      publishableKey={"pk_test_a2Vlbi10ZXJtaXRlLTk3LmNsZXJrLmFjY291bnRzLmRldiQ"}
+    >
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <InitialLayout />
         <Toast />

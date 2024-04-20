@@ -8,6 +8,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -37,6 +38,7 @@ const VerifyScreen = () => {
   const router = useRouter();
   const [verificationCode, setVerificationCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { signUp, setActive } = useSignUp();
 
   const submitVerificationCode = async () => {
@@ -52,6 +54,7 @@ const VerifyScreen = () => {
           }, 3000);
         });
       if (verifiedCode) {
+        setIsLoading(true);
         const response = await axios.post(
           `https://backend-kusur-clone.onrender.com/api/auth/login`,
           {
@@ -69,6 +72,8 @@ const VerifyScreen = () => {
       }
     } catch (error) {
       console.error("Error verifying code:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,7 +93,10 @@ const VerifyScreen = () => {
         <View className="flex items-center justify-center mt-24 mb-12">
           <KusurLogo width={140} height={35} />
         </View>
-        <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
+        <View
+          className="bg-white m-4 p-3 rounded-lg flex  space-y-3"
+          style={{ width: horizontalScale(380) }}
+        >
           <View className="flex flex-row items-center justify-between mb-10">
             <TouchableOpacity onPress={() => router.back()}>
               <BackIcon width={20} height={20} />
@@ -98,23 +106,29 @@ const VerifyScreen = () => {
             </Text>
             <Text></Text>
           </View>
-          <CustomInput
-            label="SMS code"
-            value={verificationCode}
-            onChangeText={setVerificationCode}
-            errorMessage={errorMessage}
-          />
-          <View className="flex items-center justify-center">
-            <TouchableOpacity
-              onPress={submitVerificationCode}
-              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
-            >
-              <Text className="text-[16px] text-white font-[Roboto-Bold]">
-                Sign in
-              </Text>
-              <NextIcon width={20} height={16} fill="white" />
-            </TouchableOpacity>
-          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#3D44DB" />
+          ) : (
+            <View className="flex flex-col items-center justify-center">
+              <CustomInput
+                label="SMS code"
+                value={verificationCode}
+                onChangeText={setVerificationCode}
+                errorMessage={errorMessage}
+              />
+              <View className="flex items-center justify-center">
+                <TouchableOpacity
+                  onPress={submitVerificationCode}
+                  className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+                >
+                  <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                    Sign in
+                  </Text>
+                  <NextIcon width={20} height={16} fill="white" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>

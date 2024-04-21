@@ -36,6 +36,7 @@ const items = [
   {
     icon: <SurveyIcon width={horizontalScale(24)} height={verticalScale(24)} />,
     text: "Ankete",
+    isNew: true, // Add this flag for the "NEW" text
   },
   {
     icon: <HowToIcon width={horizontalScale(24)} height={verticalScale(24)} />,
@@ -64,6 +65,7 @@ const CustomDrawer = (props) => {
       console.error("Error clearing AsyncStorage:", error);
     }
   };
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -93,20 +95,46 @@ const CustomDrawer = (props) => {
             style={{
               flexDirection: "row",
               alignContent: "center",
-              gap: horizontalScale(12),
+              gap: horizontalScale(20),
               alignItems: "center",
               marginVertical: verticalScale(18),
             }}
           >
             {item.icon}
-            <Text
-              style={{
-                fontFamily: "Roboto-Bold",
-                fontSize: horizontalScale(18),
-              }}
-            >
-              {item.text}
-            </Text>
+            <View style={{ flexDirection: "row", alignContent: "flex-end" }}>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Bold",
+                  fontSize: horizontalScale(18),
+                  marginRight: item.isNew ? horizontalScale(8) : 0, // Add margin if "NEW" text is present
+                }}
+              >
+                {item.text}
+              </Text>
+              {item.isNew && ( // Render "NEW" text if isNew flag is true
+                <View
+                  style={{
+                    backgroundColor: "#FC68B1",
+                    paddingHorizontal: horizontalScale(5),
+                    flexDirection: "row",
+                    alignItems: "center",
+                    position: "absolute",
+                    top: verticalScale(-6),
+                    right: horizontalScale(-35),
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontFamily: "Roboto-Medium",
+                      fontSize: horizontalScale(13),
+                    }}
+                  >
+                    NEW
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
         ))}
         <View
@@ -122,7 +150,7 @@ const CustomDrawer = (props) => {
           style={{
             flexDirection: "row",
             alignContent: "center",
-            gap: horizontalScale(12),
+            gap: horizontalScale(20),
             alignItems: "center",
             marginBottom: verticalScale(8),
           }}
@@ -136,7 +164,6 @@ const CustomDrawer = (props) => {
         </TouchableOpacity>
       </View>
       <View style={{ flexGrow: 1, justifyContent: "flex-end" }}>
-        {/* New view for Hi text */}
         <View
           style={{
             flexDirection: "column",

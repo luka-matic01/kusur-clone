@@ -65,7 +65,7 @@ const LoginScreen = () => {
       Toast.show({
         type: "success",
         text1: "Success",
-        text2: "SMS code has been sent to Your phone number  👋",
+        text2: "SMS code has been sent to Your phone number",
       });
 
       router.push("/verify");
@@ -88,7 +88,7 @@ const LoginScreen = () => {
         }}
       >
         <View className="flex items-center justify-center mt-24 mb-12">
-          <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(140)} />
         </View>
         <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
           <View className="flex flex-row items-center justify-between mb-10">

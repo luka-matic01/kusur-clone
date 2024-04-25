@@ -18,24 +18,57 @@ import BackIcon from "../../assets/back.svg";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
+import Toast from "react-native-toast-message";
+import { Controller, useForm } from "react-hook-form";
 
-const CustomInput = ({ label, errorMessage, value, onChangeText }) => (
+const CustomInput = ({ label, errorMessage, control, name, errors }) => (
   <View style={styles.container} className="w-[300px]">
-    <Text style={styles.label}>{label}</Text>
-    <View style={styles.inputContainer}>
-      <TextInput
-        value={value}
-        onChangeText={onChangeText}
-        style={styles.input}
-        keyboardType="number-pad"
+    <Text
+      style={[
+        styles.label,
+        { color: errors.verificationCode ? "red" : "#403F40CC" },
+      ]}
+    >
+      {label}
+    </Text>
+    <View
+      style={[
+        styles.inputContainer,
+        { borderColor: errors.verificationCode ? "red" : "#E5E5E5" },
+      ]}
+    >
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={styles.input}
+            keyboardType="number-pad"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name={name}
+        rules={{
+          required: true,
+        }}
+        defaultValue=""
       />
     </View>
+    {errors.verificationCode && (
+      <Text style={styles.errorMessage}>SMS code is required</Text>
+    )}
     {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
   </View>
 );
 
 const VerifyScreen = () => {
   const router = useRouter();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [verificationCode, setVerificationCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,10 +81,11 @@ const VerifyScreen = () => {
           code: verificationCode,
         })
         .catch((err) => {
-          setErrorMessage(err.errors[0].longMessage);
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 3000);
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "SMS code is not valid or has expired",
+          });
         });
       if (verifiedCode) {
         setIsLoading(true);
@@ -77,6 +111,8 @@ const VerifyScreen = () => {
     }
   };
 
+  console.log(errors);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -91,7 +127,7 @@ const VerifyScreen = () => {
         }}
       >
         <View className="flex items-center justify-center mt-24 mb-12">
-          <KusurLogo width={140} height={35} />
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(140)} />
         </View>
         <View
           className="bg-white m-4 p-3 rounded-lg flex  space-y-3"
@@ -112,23 +148,27 @@ const VerifyScreen = () => {
             <View className="flex flex-col items-center justify-center">
               <CustomInput
                 label="SMS code"
-                value={verificationCode}
-                onChangeText={setVerificationCode}
-                errorMessage={errorMessage}
+                control={control}
+                name="verificationCode"
+                errorMessage={
+                  errors.verificationCode && errors.verificationCode.message
+                }
+                errors={errors}
               />
-              <View className="flex items-center justify-center">
-                <TouchableOpacity
-                  onPress={submitVerificationCode}
-                  className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
-                >
-                  <Text className="text-[16px] text-white font-[Roboto-Bold]">
-                    Sign in
-                  </Text>
-                  <NextIcon width={20} height={16} fill="white" />
-                </TouchableOpacity>
-              </View>
             </View>
           )}
+          <View className="flex items-center justify-center">
+            <TouchableOpacity
+              onPress={handleSubmit(submitVerificationCode)}
+              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+              disabled={isLoading ? true : false}
+            >
+              <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                Sign in
+              </Text>
+              <NextIcon width={20} height={16} fill="white" />
+            </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
@@ -143,9 +183,10 @@ const styles = StyleSheet.create({
   label: {
     position: "absolute",
     top: verticalScale(-15),
-    left: horizontalScale(5),
+    left: horizontalScale(12),
     fontSize: horizontalScale(16),
     backgroundColor: "white",
+    paddingHorizontal: horizontalScale(4),
     color: "#403F40CC",
     zIndex: 30,
   },
@@ -154,6 +195,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 0.3,
     borderColor: "#E5E5E5",
+    paddingHorizontal: horizontalScale(10),
     borderRadius: 5,
   },
   countryCode: {

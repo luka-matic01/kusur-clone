@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
 import * as Font from "expo-font";
 import * as SecureStore from "expo-secure-store";
+import { toastConfig } from "../utils/helpers";
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();
@@ -102,7 +103,7 @@ const RootLayout = () => {
     >
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <InitialLayout />
-        <Toast />
+        <Toast config={toastConfig} />
       </View>
     </ClerkProvider>
   );

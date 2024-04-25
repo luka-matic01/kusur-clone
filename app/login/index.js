@@ -33,7 +33,7 @@ const LoginScreen = () => {
         }}
       >
         <View style={{ alignItems: "center", paddingTop: verticalScale(120) }}>
-          <KusurLogo width={horizontalScale(140)} height={verticalScale(35)} />
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(60)} />
         </View>
 
         <View

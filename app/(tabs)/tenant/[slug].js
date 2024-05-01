@@ -62,13 +62,13 @@ const TenantPage = () => {
         <View className="flex flex-col items-center">
           <Text
             className="font-bold text-[#403F40]"
-            style={{ fontSize: horizontalScale(45) }}
+            style={{ fontSize: horizontalScale(40) }}
           >
             {tenant.pointBalance}
           </Text>
           <Text
             className="font-[Roboto-Medium] text-[#403F40]"
-            style={{ fontSize: horizontalScale(12) }}
+            style={{ fontSize: horizontalScale(10) }}
           >
             Bodova ukupno
           </Text>
@@ -77,19 +77,19 @@ const TenantPage = () => {
           <View className="flex items-center justify-center p-3 border-[#100F100F] border-2 rounded-lg border-opacity-90">
             <Text
               className="text-[#403F40] font-[Roboto-Black]"
-              style={{ fontSize: horizontalScale(24) }}
+              style={{ fontSize: horizontalScale(20) }}
             >
               30
             </Text>
             <Text
               className="text-[#403F40] font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(12) }}
+              style={{ fontSize: horizontalScale(10) }}
             >
               Bodova potrebno
             </Text>
             <Text
               className="text-[#403F40] font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(12) }}
+              style={{ fontSize: horizontalScale(10) }}
             >
               do Nove nagrade!
             </Text>
@@ -107,7 +107,7 @@ const TenantPage = () => {
           <Text
             style={{
               paddingBottom: 6,
-              fontSize: horizontalScale(18),
+              fontSize: horizontalScale(16),
             }}
             className={`${
               selectedOption === "coupons"
@@ -128,7 +128,7 @@ const TenantPage = () => {
           <Text
             style={{
               paddingBottom: 6,
-              fontSize: horizontalScale(18),
+              fontSize: horizontalScale(16),
             }}
             className={`${
               selectedOption === "vouchers"

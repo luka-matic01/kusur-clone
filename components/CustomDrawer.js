@@ -18,38 +18,38 @@ import { horizontalScale, verticalScale } from "../utils/helpers";
 
 const items = [
   {
-    icon: <ObjectIcon width={horizontalScale(24)} height={verticalScale(24)} />,
+    icon: <ObjectIcon width={horizontalScale(18)} height={verticalScale(18)} />,
     text: "Moji objekti",
   },
   {
     icon: (
-      <ProfileIcon width={horizontalScale(24)} height={verticalScale(24)} />
+      <ProfileIcon width={horizontalScale(18)} height={verticalScale(18)} />
     ),
     text: "Profil",
   },
   {
     icon: (
-      <SettingsIcon width={horizontalScale(24)} height={verticalScale(24)} />
+      <SettingsIcon width={horizontalScale(18)} height={verticalScale(18)} />
     ),
     text: "Postavke",
   },
   {
-    icon: <SurveyIcon width={horizontalScale(24)} height={verticalScale(24)} />,
+    icon: <SurveyIcon width={horizontalScale(18)} height={verticalScale(18)} />,
     text: "Ankete",
     isNew: true, // Add this flag for the "NEW" text
   },
   {
-    icon: <HowToIcon width={horizontalScale(24)} height={verticalScale(24)} />,
+    icon: <HowToIcon width={horizontalScale(18)} height={verticalScale(18)} />,
     text: "How to?",
   },
   {
     icon: (
-      <SupportIcon width={horizontalScale(24)} height={verticalScale(24)} />
+      <SupportIcon width={horizontalScale(18)} height={verticalScale(18)} />
     ),
     text: "Podrška",
   },
   {
-    icon: <AboutIcon width={horizontalScale(24)} height={verticalScale(24)} />,
+    icon: <AboutIcon width={horizontalScale(18)} height={verticalScale(18)} />,
     text: "O nama",
   },
 ];
@@ -70,7 +70,7 @@ const CustomDrawer = (props) => {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          marginTop: verticalScale(48),
+          marginTop: verticalScale(40),
           padding: horizontalScale(8),
           marginHorizontal: horizontalScale(8),
         }}
@@ -79,14 +79,14 @@ const CustomDrawer = (props) => {
           onPress={() => props.navigation.closeDrawer()}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <MenuIcon width={horizontalScale(24)} height={verticalScale(24)} />
+          <MenuIcon width={horizontalScale(22)} height={verticalScale(22)} />
         </TouchableOpacity>
         <View
           style={{
             height: 1,
             backgroundColor: "#F3F4F6",
             marginBottom: verticalScale(14),
-            marginTop: verticalScale(24),
+            marginTop: verticalScale(18),
           }}
         />
         {items.map((item, index) => (
@@ -97,7 +97,7 @@ const CustomDrawer = (props) => {
               alignContent: "center",
               gap: horizontalScale(20),
               alignItems: "center",
-              marginVertical: verticalScale(18),
+              marginVertical: verticalScale(16),
             }}
           >
             {item.icon}
@@ -105,7 +105,7 @@ const CustomDrawer = (props) => {
               <Text
                 style={{
                   fontFamily: "Roboto-Bold",
-                  fontSize: horizontalScale(18),
+                  fontSize: horizontalScale(17),
                   marginRight: item.isNew ? horizontalScale(8) : 0, // Add margin if "NEW" text is present
                 }}
               >
@@ -120,14 +120,14 @@ const CustomDrawer = (props) => {
                     alignItems: "center",
                     position: "absolute",
                     top: verticalScale(-6),
-                    right: horizontalScale(-35),
+                    right: horizontalScale(-37),
                   }}
                 >
                   <Text
                     style={{
                       color: "white",
                       fontFamily: "Roboto-Medium",
-                      fontSize: horizontalScale(13),
+                      fontSize: horizontalScale(12),
                     }}
                   >
                     NEW
@@ -155,9 +155,9 @@ const CustomDrawer = (props) => {
             marginBottom: verticalScale(8),
           }}
         >
-          <LogOutIcon width={horizontalScale(24)} height={verticalScale(24)} />
+          <LogOutIcon width={horizontalScale(18)} height={verticalScale(18)} />
           <Text
-            style={{ fontFamily: "Roboto-Bold", fontSize: horizontalScale(18) }}
+            style={{ fontFamily: "Roboto-Bold", fontSize: horizontalScale(17) }}
           >
             Odjavi se
           </Text>
@@ -191,13 +191,13 @@ const CustomDrawer = (props) => {
               }}
             >
               <FacebookIcon
-                width={horizontalScale(24)}
-                height={verticalScale(24)}
+                width={horizontalScale(18)}
+                height={verticalScale(18)}
               />
               <Text
                 style={{
                   fontFamily: "Roboto-Bold",
-                  fontSize: horizontalScale(16),
+                  fontSize: horizontalScale(14),
                   marginLeft: horizontalScale(12),
                   color: "white",
                 }}
@@ -217,13 +217,13 @@ const CustomDrawer = (props) => {
               }}
             >
               <InstagramIcon
-                width={horizontalScale(24)}
-                height={verticalScale(24)}
+                width={horizontalScale(18)}
+                height={verticalScale(18)}
               />
               <Text
                 style={{
                   fontFamily: "Roboto-Bold",
-                  fontSize: horizontalScale(16),
+                  fontSize: horizontalScale(14),
                   marginLeft: horizontalScale(8),
                   color: "white",
                 }}
@@ -245,7 +245,7 @@ const CustomDrawer = (props) => {
           <Text
             style={{
               fontFamily: "Roboto-Regular",
-              fontSize: horizontalScale(16),
+              fontSize: horizontalScale(15),
               marginLeft: verticalScale(8),
             }}
           >

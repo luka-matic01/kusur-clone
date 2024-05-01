@@ -42,13 +42,13 @@ const TabsLayout = () => {
               <View className="flex items-center  mt-2">
                 <MaterialIcons
                   name="redeem"
-                  size={24}
+                  size={22}
                   color={focused ? "#3D44DB" : "black"}
                 />
                 <Text
                   style={{
                     color: focused ? "#3D44DB" : "black",
-                    fontSize: horizontalScale(16),
+                    fontSize: horizontalScale(15),
                     fontWeight: focused ? "bold" : "normal",
                   }}
                 >
@@ -77,7 +77,7 @@ const TabsLayout = () => {
             <View className="flex items-center mt-2">
               <MaterialIcons
                 name="receipt-long"
-                size={24}
+                size={22}
                 color={focused ? "#3D44DB" : "#403F40"}
               />
               <Text
@@ -86,7 +86,7 @@ const TabsLayout = () => {
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
                 } `}
-                style={{ fontSize: horizontalScale(16) }}
+                style={{ fontSize: horizontalScale(15) }}
               >
                 Ponuda
               </Text>
@@ -129,7 +129,7 @@ const TabsLayout = () => {
             <View className="flex items-center mt-2">
               <MaterialIcons
                 name="info-outline"
-                size={24}
+                size={22}
                 color={focused ? "#3D44DB" : "#403F40"}
               />
               <Text
@@ -138,7 +138,7 @@ const TabsLayout = () => {
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
                 } `}
-                style={{ fontSize: horizontalScale(16) }}
+                style={{ fontSize: horizontalScale(15) }}
               >
                 Info
               </Text>
@@ -156,7 +156,7 @@ const TabsLayout = () => {
             <View className="flex items-center mt-2">
               <MaterialIcons
                 name="more-horiz"
-                size={24}
+                size={22}
                 color={focused ? "#3D44DB" : "#403F40"}
               />
               <Text
@@ -165,7 +165,7 @@ const TabsLayout = () => {
                     ? "text-[#3D44DB] font-[Roboto-Bold]"
                     : "text-[#403F40]"
                 } `}
-                style={{ fontSize: horizontalScale(16) }}
+                style={{ fontSize: horizontalScale(15) }}
               >
                 Ostalo
               </Text>

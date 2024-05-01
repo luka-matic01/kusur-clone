@@ -33,7 +33,10 @@ const HomeScreen = () => {
           title: "",
           headerRight: () => (
             <View className="flex flex-row items-center space-x-2 mr-4">
-              <Text className="text-[#403F40] font-[Roboto-Bold] text-[14px]">
+              <Text
+                className="text-[#403F40] font-[Roboto-Bold]"
+                style={{ fontSize: horizontalScale(14) }}
+              >
                 Dodaj objekat
               </Text>
               <PlusIcon width={18} height={18} />

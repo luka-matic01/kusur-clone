@@ -74,11 +74,11 @@ const VerifyScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signUp, setActive } = useSignUp();
 
-  const submitVerificationCode = async () => {
+  const submitVerificationCode = async (data) => {
     try {
       const verifiedCode = await signUp
         .attemptPhoneNumberVerification({
-          code: verificationCode,
+          code: data.verificationCode,
         })
         .catch((err) => {
           Toast.show({
@@ -111,8 +111,6 @@ const VerifyScreen = () => {
     }
   };
 
-  console.log(errors);
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -126,15 +124,23 @@ const VerifyScreen = () => {
           alignItems: "center",
         }}
       >
-        <View className="flex items-center justify-center mt-24 mb-12">
-          <KusurLogo width={horizontalScale(140)} height={verticalScale(140)} />
+        <View style={{ alignItems: "center", paddingTop: verticalScale(120) }}>
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(40)} />
         </View>
         <View
-          className="bg-white m-4 p-3 rounded-lg flex  space-y-3"
-          style={{ width: horizontalScale(380) }}
+          className="bg-white mb-2  rounded-lg flex  space-y-3"
+          style={{
+            paddingHorizontal: horizontalScale(15),
+            paddingVertical: verticalScale(10),
+          }}
         >
           <View className="flex flex-row items-center justify-between mb-10">
-            <TouchableOpacity onPress={() => router.back()}>
+            <TouchableOpacity
+              onPress={async () => {
+                router.push("/login");
+                await AsyncStorage.setItem("animation", "yes");
+              }}
+            >
               <BackIcon width={20} height={20} />
             </TouchableOpacity>
             <Text className="text-[#403F40] text-[18px] font-[Roboto-Bold] text-center flex self-center">
@@ -143,7 +149,9 @@ const VerifyScreen = () => {
             <Text></Text>
           </View>
           {isLoading ? (
-            <ActivityIndicator size="large" color="#3D44DB" />
+            <View className="flex items-center justify-start">
+              <ActivityIndicator size="large" color="#3D44DB" />
+            </View>
           ) : (
             <View className="flex flex-col items-center justify-center">
               <CustomInput
@@ -160,10 +168,14 @@ const VerifyScreen = () => {
           <View className="flex items-center justify-center">
             <TouchableOpacity
               onPress={handleSubmit(submitVerificationCode)}
-              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+              className="bg-[#3D44DB] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
               disabled={isLoading ? true : false}
+              style={{ width: horizontalScale(320) }}
             >
-              <Text className="text-[16px] text-white font-[Roboto-Bold]">
+              <Text
+                className="text-white font-[Roboto-Bold]"
+                style={{ fontSize: horizontalScale(16) }}
+              >
                 Sign in
               </Text>
               <NextIcon width={20} height={16} fill="white" />
@@ -178,15 +190,15 @@ const VerifyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
-    width: horizontalScale(350),
+    width: horizontalScale(320),
   },
   label: {
     position: "absolute",
-    top: verticalScale(-15),
-    left: horizontalScale(12),
-    fontSize: horizontalScale(16),
+    top: verticalScale(-10),
+    left: horizontalScale(5),
+    fontSize: horizontalScale(12),
     backgroundColor: "white",
-    paddingHorizontal: horizontalScale(4),
+    paddingHorizontal: horizontalScale(8),
     color: "#403F40CC",
     zIndex: 30,
   },

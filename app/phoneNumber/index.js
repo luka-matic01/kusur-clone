@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
   TextInput,
@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Animated,
+  Easing,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -16,6 +18,7 @@ import NextIcon from "../../assets/next.svg";
 import BackIcon from "../../assets/back.svg";
 import Toast from "react-native-toast-message";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CustomInput = ({ label, errorMessage, ...inputProps }) => (
   <View style={styles.container}>
@@ -39,6 +42,16 @@ const LoginScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const { signUp } = useSignUp();
   const [errorMessage, setErrorMessage] = useState("");
+  const slideAnim = useRef(new Animated.Value(200)).current;
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 700,
+      easing: Easing.bounce,
+      useNativeDriver: true,
+    }).start();
+  }, [slideAnim]);
 
   const sendVerificationCode = async () => {
     try {
@@ -87,35 +100,58 @@ const LoginScreen = () => {
           alignItems: "center",
         }}
       >
-        <View className="flex items-center justify-center mt-24 mb-12">
-          <KusurLogo width={horizontalScale(140)} height={verticalScale(140)} />
+        <View style={{ alignItems: "center", paddingTop: verticalScale(120) }}>
+          <KusurLogo width={horizontalScale(140)} height={verticalScale(40)} />
         </View>
-        <View className="bg-white m-4 p-3 rounded-lg flex  space-y-3">
-          <View className="flex flex-row items-center justify-between mb-10">
-            <TouchableOpacity onPress={() => router.back()}>
+        <View
+          className="bg-white mb-2  rounded-lg flex  space-y-3"
+          style={{
+            paddingHorizontal: horizontalScale(15),
+            paddingVertical: verticalScale(10),
+          }}
+        >
+          <Animated.View
+            className="flex flex-row items-center justify-between mb-10"
+            style={[{ transform: [{ translateX: slideAnim }] }]}
+          >
+            <TouchableOpacity
+              onPress={async () => {
+                await AsyncStorage.setItem("animation", "yes");
+                router.push("/login");
+              }}
+            >
               <BackIcon width={20} height={20} />
             </TouchableOpacity>
             <Text className="text-[#403F40] text-[18px] font-[Roboto-Black] text-center flex self-center">
               Sign in with SMS
             </Text>
             <Text></Text>
-          </View>
-          <CustomInput
-            label="Your number"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            errorMessage={errorMessage}
-          />
+          </Animated.View>
+          <Animated.View
+            style={[{ transform: [{ translateX: slideAnim }] }]}
+            className="flex items-center justify-center"
+          >
+            <CustomInput
+              label="Your number"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              errorMessage={errorMessage}
+            />
+          </Animated.View>
+
           <View className="flex items-center justify-center">
-            <TouchableOpacity
-              className="bg-[#3D44DB] w-[300px] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
-              onPress={sendVerificationCode}
-            >
-              <Text className="text-[16px] text-white font-[Roboto-Bold]">
-                Send SMS code
-              </Text>
-              <NextIcon width={20} height={16} fill="white" />
-            </TouchableOpacity>
+            <Animated.View style={[{ transform: [{ translateX: slideAnim }] }]}>
+              <TouchableOpacity
+                className="bg-[#3D44DB] flex items-center flex-row space-x-2 justify-center py-3 rounded-md"
+                onPress={sendVerificationCode}
+                style={{ width: horizontalScale(320) }}
+              >
+                <Text className="text-[16px] text-white font-[Roboto-Bold]">
+                  Send SMS code
+                </Text>
+                <NextIcon width={20} height={16} fill="white" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
         </View>
       </ImageBackground>
@@ -126,14 +162,15 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
-    width: horizontalScale(350),
+    width: horizontalScale(320),
   },
   label: {
     position: "absolute",
-    top: verticalScale(-15),
+    top: verticalScale(-10),
     left: horizontalScale(5),
-    fontSize: horizontalScale(16),
+    fontSize: horizontalScale(12),
     backgroundColor: "white",
+    paddingHorizontal: horizontalScale(4),
     color: "#403F40CC",
     zIndex: 30,
   },
@@ -145,8 +182,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   countryCode: {
-    paddingHorizontal: horizontalScale(7),
-    fontSize: horizontalScale(16),
+    paddingHorizontal: horizontalScale(8),
+    fontSize: horizontalScale(15),
     color: "#403F40CC",
   },
   input: {

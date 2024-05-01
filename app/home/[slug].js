@@ -59,13 +59,13 @@ const Tenants = () => {
         <View className="flex flex-col items-center">
           <Text
             className="font-[Roboto-Black] text-white"
-            style={{ fontSize: horizontalScale(45) }}
+            style={{ fontSize: horizontalScale(40) }}
           >
             {userData.wallet.pointBalance}
           </Text>
           <Text
             className="font-[Roboto-Medium] text-white"
-            style={{ fontSize: horizontalScale(12) }}
+            style={{ fontSize: horizontalScale(10) }}
           >
             Kusur bodova
           </Text>
@@ -74,19 +74,29 @@ const Tenants = () => {
           <View className="flex items-center justify-center p-4 border-[#665AF666] border-2 rounded-lg border-opacity-90">
             <Text
               className="text-white font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(12) }}
+              style={{ fontSize: horizontalScale(10) }}
             >
               Šta su
             </Text>
             <Text
               className="text-white font-[Roboto-Medium]"
-              style={{ fontSize: horizontalScale(12) }}
+              style={{ fontSize: horizontalScale(10) }}
             >
               Kusur bodovi
             </Text>
           </View>
-          <View className="absolute right-1 top-4 z-0">
-            <QuestionIcon width={35} height={35} />
+          <View
+            className="z-0"
+            style={{
+              position: "absolute",
+              right: horizontalScale(5),
+              top: verticalScale(17),
+            }}
+          >
+            <QuestionIcon
+              width={horizontalScale(33)}
+              height={verticalScale(43)}
+            />
           </View>
         </View>
       </View>
@@ -94,18 +104,18 @@ const Tenants = () => {
         <View className="flex flex-row items-center justify-between">
           <Text
             className="text-[#403F40] font-[Roboto-Bold]"
-            style={{ fontSize: horizontalScale(18) }}
+            style={{ fontSize: horizontalScale(16) }}
           >
             Moji objekti
           </Text>
           <Text
             className="text-[#403F40] font-[Roboto-Medium]"
-            style={{ fontSize: horizontalScale(13) }}
+            style={{ fontSize: horizontalScale(12) }}
           >
             Filtriraj po kategoriji
           </Text>
         </View>
-        <View className="flex flex-row flex-wrap justify-between mt-3">
+        <View className="flex flex-row flex-wrap justify-between mt-2">
           {userData.relusertenant.map((relUserTenant) => (
             <TenantCard
               key={relUserTenant.tenant.id}

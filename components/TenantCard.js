@@ -28,9 +28,9 @@ const TenantCard = ({ tenant, pointBalance }) => {
           <Image
             source={{ uri: tenant.imageUrl }}
             style={{
-              width: horizontalScale(180),
-              height: verticalScale(180),
-              borderRadius: 10,
+              width: horizontalScale(165),
+              height: verticalScale(165),
+              borderRadius: horizontalScale(8),
             }}
           />
           <View
@@ -41,17 +41,17 @@ const TenantCard = ({ tenant, pointBalance }) => {
               backgroundColor: "rgba(214, 211, 214, 0.6)",
               paddingHorizontal: 1,
               paddingVertical: 4,
-              borderRadius: 4,
+              borderRadius: horizontalScale(3),
             }}
           >
             <MoreIcon width={20} height={18} />
           </View>
         </View>
-        <View className="p-2">
+        <View style={{ marginTop: verticalScale(10) }}>
           <Text
             style={{
               color: "#403F40",
-              fontSize: horizontalScale(18),
+              fontSize: horizontalScale(16),
               fontFamily: "Roboto-Bold",
             }}
           >

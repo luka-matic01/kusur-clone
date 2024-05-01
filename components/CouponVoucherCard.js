@@ -16,17 +16,18 @@ const CouponVoucherCard = ({ card, cardName }) => {
         <Image
           source={{ uri: card.imageUrl }}
           style={{
-            width: horizontalScale(180),
-            height: verticalScale(180),
-            borderRadius: 10,
+            width: horizontalScale(165),
+            height: verticalScale(165),
+            borderRadius: horizontalScale(8),
           }}
         />
       </View>
-      <View className="p-2">
+      <View className="">
         <Text
           style={{
             color: "#403F40",
             fontSize: horizontalScale(18),
+            marginTop: verticalScale(7),
             fontFamily: "Roboto-Bold",
           }}
         >
@@ -39,7 +40,9 @@ const CouponVoucherCard = ({ card, cardName }) => {
                 textDecorationLine: "line-through",
                 marginRight: 5,
                 color: "rgba(64, 63, 64, 0.4)",
-                fontSize: horizontalScale(16),
+                fontSize: horizontalScale(14),
+                marginTop: verticalScale(5),
+
                 fontFamily: "Roboto-Bold",
               }}
             >
@@ -48,7 +51,9 @@ const CouponVoucherCard = ({ card, cardName }) => {
             <Text
               style={{
                 color: "#403F40",
-                fontSize: horizontalScale(16),
+                fontSize: horizontalScale(14),
+                marginTop: verticalScale(5),
+
                 fontFamily: "Roboto-Bold",
               }}
             >
@@ -62,10 +67,17 @@ const CouponVoucherCard = ({ card, cardName }) => {
                 backgroundColor: "#E52A2A",
                 paddingHorizontal: 6,
                 paddingVertical: 2,
-                borderRadius: 4,
+                borderRadius: horizontalScale(3),
+                marginTop: verticalScale(5),
               }}
             >
-              <Text style={{ color: "white", fontFamily: "Roboto-Medium" }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "Roboto-Medium",
+                  fontSize: horizontalScale(12),
+                }}
+              >
                 -{card.discountValue} {card.currency}
               </Text>
             </View>

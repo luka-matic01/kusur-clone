@@ -32,10 +32,17 @@ export const toastConfig = {
   success: (props) => (
     <BaseToast
       {...props}
-      style={{ backgroundColor: "#282fc5", borderLeftColor: "#282fc5" }}
-      contentContainerStyle={{ paddingHorizontal: horizontalScale(7) }}
+      style={{
+        backgroundColor: "#282fc5",
+        borderLeftColor: "#282fc5",
+        marginHorizontal: horizontalScale(20),
+      }}
+      contentContainerStyle={{
+        paddingHorizontal: horizontalScale(7),
+        marginHorizontal: horizontalScale(6),
+      }}
       text1Style={{
-        fontSize: horizontalScale(18),
+        fontSize: horizontalScale(16),
         fontFamily: "Roboto-Black",
         color: "white",
       }}
@@ -45,7 +52,7 @@ export const toastConfig = {
         </View>
       )}
       text2Style={{
-        fontSize: horizontalScale(14),
+        fontSize: horizontalScale(12),
         fontFamily: "Roboto-Regular",
         color: "white",
       }}
@@ -58,10 +65,17 @@ export const toastConfig = {
   error: (props) => (
     <BaseToast
       {...props}
-      style={{ backgroundColor: "#282fc5", borderLeftColor: "#282fc5" }}
-      contentContainerStyle={{ paddingHorizontal: horizontalScale(7) }}
+      style={{
+        backgroundColor: "#282fc5",
+        borderLeftColor: "#282fc5",
+        width: horizontalScale(340),
+      }}
+      contentContainerStyle={{
+        paddingHorizontal: horizontalScale(7),
+        marginHorizontal: horizontalScale(6),
+      }}
       text1Style={{
-        fontSize: horizontalScale(18),
+        fontSize: horizontalScale(16),
         fontFamily: "Roboto-Black",
         color: "white",
       }}
@@ -71,7 +85,7 @@ export const toastConfig = {
         </View>
       )}
       text2Style={{
-        fontSize: horizontalScale(14),
+        fontSize: horizontalScale(12),
         fontFamily: "Roboto-Regular",
         color: "white",
       }}

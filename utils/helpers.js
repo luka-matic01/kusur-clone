@@ -35,7 +35,7 @@ export const toastConfig = {
       style={{
         backgroundColor: "#282fc5",
         borderLeftColor: "#282fc5",
-        marginHorizontal: horizontalScale(20),
+        width: horizontalScale(350),
       }}
       contentContainerStyle={{
         paddingHorizontal: horizontalScale(7),
@@ -68,7 +68,7 @@ export const toastConfig = {
       style={{
         backgroundColor: "#282fc5",
         borderLeftColor: "#282fc5",
-        width: horizontalScale(340),
+        width: horizontalScale(350),
       }}
       contentContainerStyle={{
         paddingHorizontal: horizontalScale(7),

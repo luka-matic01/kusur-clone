@@ -48,7 +48,9 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider
-      publishableKey={"pk_test_Zml0LWdsb3d3b3JtLTk4LmNsZXJrLmFjY291bnRzLmRldiQ"}
+      publishableKey={
+        "pk_test_bGl2ZS1ibG93ZmlzaC00Mi5jbGVyay5hY2NvdW50cy5kZXYk"
+      }
       tokenCache={tokenCache}
     >
       <RootLayoutNav />

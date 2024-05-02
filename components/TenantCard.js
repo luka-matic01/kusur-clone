@@ -37,14 +37,14 @@ const TenantCard = ({ tenant, pointBalance }) => {
             style={{
               position: "absolute",
               top: verticalScale(8),
-              right: horizontalScale(4),
+              right: horizontalScale(6),
               backgroundColor: "rgba(214, 211, 214, 0.6)",
-              paddingHorizontal: 1,
-              paddingVertical: 4,
+              paddingHorizontal: horizontalScale(1),
+              paddingVertical: horizontalScale(7),
               borderRadius: horizontalScale(3),
             }}
           >
-            <MoreIcon width={20} height={18} />
+            <MoreIcon width={horizontalScale(20)} height={verticalScale(16)} />
           </View>
         </View>
         <View style={{ marginTop: verticalScale(10) }}>

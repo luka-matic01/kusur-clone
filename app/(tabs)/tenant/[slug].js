@@ -38,7 +38,7 @@ const TenantPage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }} className="px-4 space-y-4 bg-white">
+    <View style={{ flex: 1 }} className="space-y-4 bg-white">
       <View
         style={{
           borderRadius: 6,
@@ -58,6 +58,7 @@ const TenantPage = () => {
           elevation: 5,
           padding: horizontalScale(24),
         }}
+        className="mx-4"
       >
         <View className="flex flex-col items-center">
           <Text
@@ -96,18 +97,29 @@ const TenantPage = () => {
           </View>
         </View>
       </View>
-      <View className="flex flex-row items-center space-x-4">
+      <View
+        className="flex flex-row items-center space-x-4"
+        style={{
+          borderBottomWidth: 1,
+          borderColor: "#3030300D",
+        }}
+      >
         <TouchableOpacity
           onPress={() => handleOptionSelect("coupons")}
           style={{
             borderBottomWidth: selectedOption === "coupons" ? 2 : 0,
             borderColor: "#3D44DB",
           }}
+          className="ml-4"
         >
           <Text
             style={{
               paddingBottom: 6,
               fontSize: horizontalScale(16),
+              color:
+                selectedOption === "coupons"
+                  ? "#3D44DB"
+                  : `rgba(64, 63, 64, 0.5)`,
             }}
             className={`${
               selectedOption === "coupons"
@@ -129,6 +141,10 @@ const TenantPage = () => {
             style={{
               paddingBottom: 6,
               fontSize: horizontalScale(16),
+              color:
+                selectedOption === "vouchers"
+                  ? "#3D44DB"
+                  : `rgba(64, 63, 64, 0.5)`,
             }}
             className={`${
               selectedOption === "vouchers"
@@ -141,7 +157,7 @@ const TenantPage = () => {
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <View className="flex flex-row flex-wrap justify-between">
+        <View className="flex flex-row flex-wrap justify-between mx-4">
           {selectedOption === "coupons" &&
             tenantData?.coupons.map((relUserTenant) => (
               <Animatable.View

@@ -28,7 +28,7 @@ const TabsLayout = () => {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          height: verticalScale(90),
+          height: verticalScale(70),
           paddingHorizontal: horizontalScale(6),
         },
       }}
@@ -39,7 +39,7 @@ const TabsLayout = () => {
           title: "",
           tabBarIcon: ({ focused }) => {
             return (
-              <View className="flex items-center  mt-2">
+              <View className="flex items-center  mt-4">
                 <MaterialIcons
                   name="redeem"
                   size={22}
@@ -74,7 +74,7 @@ const TabsLayout = () => {
         name="offer"
         options={() => ({
           tabBarIcon: ({ focused }) => (
-            <View className="flex items-center mt-2">
+            <View className="flex items-center mt-4">
               <MaterialIcons
                 name="receipt-long"
                 size={22}
@@ -126,7 +126,7 @@ const TabsLayout = () => {
         name="info"
         options={() => ({
           tabBarIcon: ({ focused }) => (
-            <View className="flex items-center mt-2">
+            <View className="flex items-center mt-4">
               <MaterialIcons
                 name="info-outline"
                 size={22}
@@ -153,7 +153,7 @@ const TabsLayout = () => {
         name="other"
         options={() => ({
           tabBarIcon: ({ focused }) => (
-            <View className="flex items-center mt-2">
+            <View className="flex items-center mt-4">
               <MaterialIcons
                 name="more-horiz"
                 size={22}

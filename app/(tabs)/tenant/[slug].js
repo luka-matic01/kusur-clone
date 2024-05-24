@@ -38,7 +38,7 @@ const TenantPage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }} className="space-y-4 bg-white">
+    <ScrollView style={{ flex: 1 }} className="space-y-4 bg-white">
       <View
         style={{
           borderRadius: 6,
@@ -156,31 +156,29 @@ const TenantPage = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        <View className="flex flex-row flex-wrap justify-between mx-4">
-          {selectedOption === "coupons" &&
-            tenantData?.coupons.map((relUserTenant) => (
-              <Animatable.View
-                key={relUserTenant.id}
-                animation="slideInLeft"
-                duration={100}
-              >
-                <CouponVoucherCard card={relUserTenant} cardName="coupons" />
-              </Animatable.View>
-            ))}
-          {selectedOption === "vouchers" &&
-            tenantData?.vouchers.map((relUserTenant) => (
-              <Animatable.View
-                key={relUserTenant.id}
-                animation="slideInRight"
-                duration={100}
-              >
-                <CouponVoucherCard card={relUserTenant} cardName="vouchers" />
-              </Animatable.View>
-            ))}
-        </View>
-      </ScrollView>
-    </View>
+      <View className="flex flex-row flex-wrap justify-between mx-4">
+        {selectedOption === "coupons" &&
+          tenantData?.coupons.map((relUserTenant) => (
+            <Animatable.View
+              key={relUserTenant.id}
+              animation="slideInLeft"
+              duration={100}
+            >
+              <CouponVoucherCard card={relUserTenant} cardName="coupons" />
+            </Animatable.View>
+          ))}
+        {selectedOption === "vouchers" &&
+          tenantData?.vouchers.map((relUserTenant) => (
+            <Animatable.View
+              key={relUserTenant.id}
+              animation="slideInRight"
+              duration={100}
+            >
+              <CouponVoucherCard card={relUserTenant} cardName="vouchers" />
+            </Animatable.View>
+          ))}
+      </View>
+    </ScrollView>
   );
 };
 

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Text, ActivityIndicator, View, ScrollView } from "react-native";
+import {
+  Text,
+  ActivityIndicator,
+  View,
+  ScrollView,
+  BackHandler,
+} from "react-native";
 import axios from "axios";
-import { useLocalSearchParams } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import QuestionIcon from "../../assets/tenants/question-icon.svg";
 import TenantCard from "../../components/TenantCard";
 import { horizontalScale, verticalScale } from "../../utils/helpers";
@@ -10,6 +16,20 @@ const Tenants = () => {
   const { slug } = useLocalSearchParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [])
+  );
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -40,6 +60,12 @@ const Tenants = () => {
     return <Text>Error: User data not found</Text>;
   }
 
+  // Calculate accumulated pointBalance
+  const accumulatedPointBalance = userData.relusertenant.reduce(
+    (total, relUserTenant) => total + relUserTenant.tenant.wallet.pointBalance,
+    0
+  );
+
   return (
     <ScrollView className="px-4 space-y-6 bg-white" style={{ flex: 1 }}>
       <View
@@ -61,7 +87,7 @@ const Tenants = () => {
             className="font-[Roboto-Black] text-white"
             style={{ fontSize: horizontalScale(40) }}
           >
-            {userData.wallet.pointBalance}
+            {accumulatedPointBalance}
           </Text>
           <Text
             className="font-[Roboto-Medium] text-white"
@@ -120,7 +146,7 @@ const Tenants = () => {
             <TenantCard
               key={relUserTenant.tenant.id}
               tenant={relUserTenant.tenant}
-              pointBalance={userData.wallet.pointBalance}
+              pointBalance={relUserTenant.tenant.wallet.pointBalance}
             />
           ))}
         </View>
